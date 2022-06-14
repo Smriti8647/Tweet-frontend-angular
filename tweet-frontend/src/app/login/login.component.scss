@@ -1,0 +1,27 @@
+.login-container {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .login-button {
+    width: 100%;
+  }
+  
+  label {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    padding-right: 10px;
+  }
+  input {
+    width: 100%;
+  }
+  
+  img {
+    width: 100%;
+  }
+  

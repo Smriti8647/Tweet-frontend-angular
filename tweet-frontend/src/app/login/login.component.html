@@ -1,0 +1,13 @@
+<div class="login-container">
+    <div>
+      <img src="/assets/logo.png" alt="logo">
+      
+        <div><label>username: <input type="text" [(ngModel)]="username" name="username"></label></div>
+        <div><label>password: <input type="text" [(ngModel)]="password" name="password"></label></div>
+        <div><button type="button" class="login-button" (click)="onSubmit()">Login</button></div>
+      
+      <span *ngIf="error">{{errorMessage}}</span>
+    </div>
+  </div>
+  <router-outlet></router-outlet> 
+  
