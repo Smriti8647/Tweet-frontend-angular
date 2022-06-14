@@ -51,7 +51,6 @@ export class TweetService {
 
   public createTweet(username: String, message: String) {
     var avatar;
-    this.userService.setAuthHeader();
     this.userService.getUser(username).subscribe(result => {
       avatar = result.data['avtar'];
       this.callTweetApi(username,message,avatar);

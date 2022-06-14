@@ -1,3 +1,9 @@
+
+<div>
+    <div><label>Add Tweet: <input type="text" [(ngModel)]="message" name="message"></label></div>
+    <div><button type="button" class="submit-button" (click)="createTweet()">Post</button></div>
+</div>
+
 <h1>USER TWEETS</h1>
 <div *ngFor="let tweet of tweets">
 {{tweet.message}}

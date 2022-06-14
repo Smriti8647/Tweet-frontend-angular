@@ -11,6 +11,7 @@ export class TweetComponent implements OnInit {
 
   @Input() username:String;
   tweets;
+  message:String;
 
   constructor(private service:TweetService,
     private route: ActivatedRoute) { }
@@ -29,6 +30,10 @@ export class TweetComponent implements OnInit {
       (error) => {
         console.log("error" + error);
       });
+  }
+
+  createTweet(){
+    this.service.createTweet(this.username,this.message);
   }
 
  

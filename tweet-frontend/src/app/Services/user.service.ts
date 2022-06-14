@@ -69,12 +69,18 @@ export class UserService {
   }
 
   getUser(username:String){
+    this.setAuthHeader();
    return this.client.get<ApiResponse>('http://localhost:9090/api/v1.0/tweets/user/'+username, this.httpOptions);
   }
 
   getAllUsers(){
     this.setAuthHeader();
     return this.client.get<ApiResponse>('http://localhost:9090/api/v1.0/tweets/user/all', this.httpOptions);
+   }
+
+   searchUsers(username:String){
+    this.setAuthHeader();
+    return this.client.get<ApiResponse>('http://localhost:9090/api/v1.0/tweets/user/search/'+username, this.httpOptions);
    }
 
 }

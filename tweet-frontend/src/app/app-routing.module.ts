@@ -4,6 +4,7 @@ import { AllTweetsComponent } from './all-tweets/all-tweets.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { SearchUserComponent } from './search-user/search-user.component';
 import { TweetComponent } from './tweet/tweet.component';
 
 const routes: Routes = [{
@@ -11,14 +12,15 @@ const routes: Routes = [{
 },
 {
   path: 'home/:username', component: HomeComponent,
-  // children: [
-  //     { }]
+  children: [
+      { path: 'user-tweets/:username', component: TweetComponent }]
   },
   { path: 'all-tweets', component: AllTweetsComponent},
   { path: 'all-users', component: AllUsersComponent},
-{
-  path: 'user-tweets/:username', component: TweetComponent
-},
+  { path: 'search-users', component: SearchUserComponent},
+// {
+//   // path: 'user-tweets/:username', component: TweetComponent
+// },
 {path: '', redirectTo: '/login',pathMatch: 'full'}];
 
 @NgModule({

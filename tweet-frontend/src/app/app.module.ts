@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { CreateTweetComponent } from './create-tweet/create-tweet.component';
 import { AllTweetsComponent } from './all-tweets/all-tweets.component';
 import { AllUsersComponent } from './all-users/all-users.component';
+import { CommonModule } from '@angular/common';
+import { SearchUserComponent } from './search-user/search-user.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,15 @@ import { AllUsersComponent } from './all-users/all-users.component';
     HomeComponent,
     CreateTweetComponent,
     AllTweetsComponent,
-    AllUsersComponent
+    AllUsersComponent,
+    SearchUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, 
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
