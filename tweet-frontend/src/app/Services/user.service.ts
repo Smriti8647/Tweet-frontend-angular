@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { ApiResponse } from '../model/ApiResponse';
+import { RegisterUser } from '../model/RegisterUser';
 
 
 export interface Login {
@@ -20,7 +21,8 @@ export class UserService {
 
   constructor(private client: HttpClient,) { }
   token: String;
-  private baseUrl = 'http://localhost:8082/api/v1.0/tweets/';
+  private authUrl = 'http://localhost:8082/api/v1.0/tweets/';
+  private baseUrl='http://localhost:9090/api/v1.0/tweets/';
   isSuccess: Boolean;
   error:String;
   httpOptions: Object;
@@ -32,6 +34,15 @@ export class UserService {
   //     responseType: 'json'
   //   }
 
+  setAuthHeader(){
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      }),
+      responseType: 'json'
+    }
+  }
 
   public login(username: String, password: String):Subject<boolean> {
     let login: Login = {
@@ -40,8 +51,7 @@ export class UserService {
     }
     var subject=new Subject<boolean>();
 
-     this.client.post<LoginResult>(this.baseUrl + 'login', login).subscribe(result => {
-      console.log(result);
+     this.client.post<LoginResult>(this.authUrl + 'login', login).subscribe(result => {
       localStorage.clear();
       this.token = result.token
       console.log(this.token);
@@ -57,30 +67,30 @@ export class UserService {
     
     return subject;
   }
+  
+  registerUser(registerRequest:RegisterUser){
+    return this.client.post(this.authUrl+'register', registerRequest);
 
-  setAuthHeader(){
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
-      }),
-      responseType: 'json'
-    }
   }
 
+  forgotPassword(forgotPasswordRequest,username){
+    console.log(forgotPasswordRequest);
+    return this.client.post(this.authUrl+username+'/forgot', forgotPasswordRequest);
+
+  }
   getUser(username:String){
     this.setAuthHeader();
-   return this.client.get<ApiResponse>('http://localhost:9090/api/v1.0/tweets/user/'+username, this.httpOptions);
+   return this.client.get<ApiResponse>(this.baseUrl+'user/'+username, this.httpOptions);
   }
 
   getAllUsers(){
     this.setAuthHeader();
-    return this.client.get<ApiResponse>('http://localhost:9090/api/v1.0/tweets/user/all', this.httpOptions);
+    return this.client.get<ApiResponse>(this.baseUrl+'user/all', this.httpOptions);
    }
 
    searchUsers(username:String){
     this.setAuthHeader();
-    return this.client.get<ApiResponse>('http://localhost:9090/api/v1.0/tweets/user/search/'+username, this.httpOptions);
+    return this.client.get<ApiResponse>(this.baseUrl+'user/search/'+username, this.httpOptions);
    }
 
 }

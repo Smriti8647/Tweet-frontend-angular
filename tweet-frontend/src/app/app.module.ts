@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MainbarComponent } from './mainbar/mainbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TweetComponent } from './tweet/tweet.component';
 import { HomeComponent } from './home/home.component';
@@ -14,6 +14,8 @@ import { AllTweetsComponent } from './all-tweets/all-tweets.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { CommonModule } from '@angular/common';
 import { SearchUserComponent } from './search-user/search-user.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -25,14 +27,17 @@ import { SearchUserComponent } from './search-user/search-user.component';
     CreateTweetComponent,
     AllTweetsComponent,
     AllUsersComponent,
-    SearchUserComponent
+    SearchUserComponent,
+    RegisterUserComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, 
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
