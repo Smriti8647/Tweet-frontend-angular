@@ -38,7 +38,7 @@ export class UserService {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       }),
       responseType: 'json'
     }
@@ -54,7 +54,6 @@ export class UserService {
      this.client.post<LoginResult>(this.authUrl + 'login', login).subscribe(result => {
       localStorage.clear();
       this.token = result.token
-      console.log(this.token);
       localStorage.setItem('token',""+this.token);
       subject.next(true);
     },
@@ -70,11 +69,9 @@ export class UserService {
   
   registerUser(registerRequest:RegisterUser){
     return this.client.post(this.authUrl+'register', registerRequest);
-
   }
 
   forgotPassword(forgotPasswordRequest,username){
-    console.log(forgotPasswordRequest);
     return this.client.post(this.authUrl+username+'/forgot', forgotPasswordRequest);
 
   }

@@ -1,5 +1,7 @@
-<div>
-    <div><label>Add Tweet: <input type="text" [(ngModel)]="message" name="message"></label></div>
+<div class="container">
+<div class="card">
+    <div><label>Add Tweet: <textarea [(ngModel)]="message" name="message"></textarea></label></div>
     <div><button type="button" class="submit-button" (click)="createTweet()">Post</button></div>
+  </div>
 </div>
 

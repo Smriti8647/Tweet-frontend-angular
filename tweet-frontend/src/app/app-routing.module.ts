@@ -15,11 +15,12 @@ const routes: Routes = [{
 {
   path: 'home/:username', component: HomeComponent,
   children: [
-      { path: 'user-tweets/:username', component: TweetComponent }]
+      ]
   },
+  { path: 'user-tweets/:username', component: TweetComponent },
   { path: 'all-tweets', component: AllTweetsComponent},
   { path: 'all-users', component: AllUsersComponent},
-  { path: 'search-users', component: SearchUserComponent},
+  { path: 'search-users/:username', component: SearchUserComponent},
   { path: 'register-user', component: RegisterUserComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
 // {

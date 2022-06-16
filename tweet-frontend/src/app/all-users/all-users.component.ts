@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserResponse } from '../model/UserResponse';
 import { UserService } from '../Services/user.service';
 
 @Component({
@@ -14,11 +15,22 @@ export class AllUsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe(result=>{
-      this.users=result.data;
+      this.mapUsers(result.data);
+      //this.users.avtar= '/assets/'+this.users.avtar+'.png'
     },
     error=>{
       console.log(error);
     })
+  }
+
+  mapUsers(data){
+    this.users=data.map(ele=>{
+      return{
+        ...ele,
+      avtar:'/assets/' + ele.avtar + '.png'
+      }
+    })
+
   }
 
 }
