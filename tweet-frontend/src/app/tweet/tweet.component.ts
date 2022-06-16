@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { element } from 'protractor';
 import { TweetService } from '../Services/tweet.service';
 import * as moment from 'moment';
@@ -17,7 +17,7 @@ export class TweetComponent implements OnInit {
   isReply= new Map();
 
   constructor(private service:TweetService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, private router:Router) { }
   
 
   
@@ -72,19 +72,40 @@ export class TweetComponent implements OnInit {
     if(tweet.isLikeList!=null){
      if( tweet.isLikeList.find(x=>x===tweet.loginId)!=null){
       return '/assets/like.png';
+     } else{
+      return '/assets/un-like.png';
      }
-    }
+    }else
     return '/assets/un-like.png';
   }
  setLike(like: any, index:number){
-  console.log(like);
+  console.log(this.tweets);
+  console.log(this.tweets.length-index-1);
+  index=this.tweets.length-index-1;
   if(like==="/assets/like.png"){
+    this.tweets[index]['likeImage']='/assets/un-like.png';
   console.log("un-like"+this.tweets[index]['loginId']+" - "+this.tweets[index]['id']);
+  //this.tweets[index]['isLikeList']= this.tweets[index]['isLikeList'].filter(object =>{
+  // return object!== this.tweets[index]['loginId'];
+  //});
+ 
+  this.service.removeLike(this.tweets[index]['loginId'],this.tweets[index]['id']);
+
+  //this.ngOnInit();
+  //this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
+    //this.router.navigate(['home', this.username])
+  //});
   } else{
-    this.service.setAuthHeader();
+    this.tweets[index]['likeImage']='/assets/like.png';
+   // this.tweets[index]['isLikeList']=  this.tweets[index]['isLikeList'].push(this.tweets[index]['loginId']);
+   // this.service.setAuthHeader();
     this.service.likeTweet(this.tweets[index]['loginId'],this.tweets[index]['id']);
     console.log("like");
     console.log("un-like"+this.tweets[index]['loginId']+" - "+this.tweets[index]['id']);
+   // this.ngOnInit();
+   // this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
+     // this.router.navigate(['home', this.username])
+   // });
   }
 
  }

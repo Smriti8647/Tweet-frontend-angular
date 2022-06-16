@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { ApiResponse } from '../model/ApiResponse';
-import { Subject } from 'rxjs';
 
 export interface CreateTweet {
   avtar: String
@@ -16,14 +15,11 @@ export class TweetService {
 
   private baseUrl = 'http://localhost:9090/api/v1.0/tweets/';
   constructor(private client: HttpClient,
-    private userService: UserService) {
-
-     }
+    private userService: UserService) { }
 
   httpOptions: Object;
 
-  setAuthHeader(){ 
-    let result = new Subject<Object>();
+  setAuthHeader(){
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -31,11 +27,6 @@ export class TweetService {
       }),
       responseType: 'json'
     }
-    setTimeout(()=>{
-      result.next(this.httpOptions);
-    },100)
-   
-    return result.asObservable();
   }
 
   public allTweet() {
@@ -81,26 +72,26 @@ export class TweetService {
       console.log(error);
     })
   }
-  
+
   public likeTweet(username: String, tweetId: String) {
-   console.log(this.httpOptions)
-  // this.setAuthHeader().subscribe((http)=>{
-   // console.log("ye kaya")
-   const token = `Bearer ${localStorage.getItem('token')}`;
-   console.log(token)
-   let headers = new HttpHeaders();//.set("Authorization",token);
-headers = headers.append("Authorization",token);
-//headers = headers.append("Content-Type", 'application/json');
-console.log(headers)
-    this.client.put(this.baseUrl + username + '/like/'+tweetId ,headers).subscribe(result=>{
-      console.log("response kha hai")
+    this.setAuthHeader();
+    this.client.put(this.baseUrl + username + '/like/'+tweetId , {},this.httpOptions).subscribe(result=>{
       console.log(result)
     },
     error=>{
       console.log(error);
-    }) ;
-  // });
-   
+    }) 
+
+  }
+
+  public removeLike(username: String, tweetId: String) {
+    this.setAuthHeader();
+    this.client.put(this.baseUrl + username + '/remove-like/'+tweetId , {},this.httpOptions).subscribe(result=>{
+      console.log(result)
+    },
+    error=>{
+      console.log(error);
+    }) 
 
   }
 }
