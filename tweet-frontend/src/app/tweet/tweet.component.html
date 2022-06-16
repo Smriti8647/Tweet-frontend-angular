@@ -4,7 +4,7 @@
     <div><button type="button" class="submit-button" (click)="createTweet()">Post</button></div>
   </div> -->
 
-  <h1>USER TWEETS</h1>
+  <h1>{{heading}} TWEETS</h1>
   <div *ngIf="tweets" class="container">
     <div *ngFor="let tweet of tweets.reverse(); let i = index" class="content">
       <div class="card">

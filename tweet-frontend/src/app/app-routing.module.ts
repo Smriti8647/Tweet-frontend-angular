@@ -17,7 +17,7 @@ const routes: Routes = [{
   children: [
       ]
   },
-  { path: 'user-tweets/:username', component: TweetComponent },
+  { path: 'tweets/:username', component: TweetComponent },
   { path: 'all-tweets', component: AllTweetsComponent},
   { path: 'all-users', component: AllUsersComponent},
   { path: 'search-users/:username', component: SearchUserComponent},

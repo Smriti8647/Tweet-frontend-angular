@@ -16,23 +16,30 @@ export class TweetComponent implements OnInit {
   tweets;
   message: String;
   isReply = new Map();
+  heading:String;
 
   constructor(private service: TweetService,
     private route: ActivatedRoute) { }
 
 
-
-
   ngOnInit(): void {
-
     this.getTweets();
-
-
   }
-
 
   getTweets() {
     this.username = this.route.snapshot.paramMap.get('username');
+    if(this.username=='all'){
+      this.heading='ALL';
+      this.service.allTweets().subscribe(result => {
+        this.tweets=result.data;
+        this.mapTweets(result.data);
+      },
+        (error) => {
+          console.log("error" + error);
+        });
+    }
+    else{
+      this.heading=this.username.toUpperCase();
     this.service.userTweets(this.username).subscribe(result => {
        this.tweets=result.data
       this.mapTweets(result.data);
@@ -41,6 +48,7 @@ export class TweetComponent implements OnInit {
       (error) => {
         console.log("error" + error);
       });
+    }
   }
 
   createTweet() {
