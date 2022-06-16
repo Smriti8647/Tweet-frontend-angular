@@ -6,4 +6,5 @@ export interface Tweet {
     loginId: String;
     message: String;
     time: Date;
+    likeImage?: String;
 }

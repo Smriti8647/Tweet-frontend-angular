@@ -1,11 +1,37 @@
-
-<div>
-    <div><label>Add Tweet: <input type="text" [(ngModel)]="message" name="message"></label></div>
+<div class="user-tweet">
+<div class="card">
+    <div><label>Add Tweet: <textarea [(ngModel)]="message" name="message"></textarea></label></div>
     <div><button type="button" class="submit-button" (click)="createTweet()">Post</button></div>
 </div>
 
 <h1>USER TWEETS</h1>
-<div *ngFor="let tweet of tweets">
-{{tweet.message}}
+<div *ngIf="tweets" class="container">
+<div *ngFor="let tweet of tweets.reverse(); let i = index" class="content">
+    <div class="card">
+       
+      <div class="firstinfo"><img src="{{tweet.avtar}}"/>
+        <div class="profileinfo">
+            <time>{{tweet.time}}</time>
+          <h3>@{{tweet.loginId}}</h3>
+          <p class="bio">{{tweet.message}}</p>
+         
+<hr>
+<br>
+          <div class="button-container"> <button class="like" (click)="setLike(tweet.likeImage, i)"><img src="{{tweet.likeImage}}"/></button><textarea placeholder="Tweet your reply"></textarea><button class="comment">Reply </button></div>
+        </div>
+      </div>
+     <div  *ngIf="tweet.commentList"> <button class="show-button" (click)="showReply(i)">{{isReply.get(i)[1]}}</button></div>
+    </div>
+    <div  *ngIf="tweet.commentList && isReply.get(i)[0]" class="card">
+        <h2>Commets</h2>
+    <div *ngFor="let comment of tweet.commentList.reverse()" class="content">
+        <div><h3>@{{comment.commentor}}</h3> <time>{{comment.time}}</time> </div>
+        <div></div>
+        <p>{{comment.commentMessage}}</p>
+        <hr>
+      </div>
+  
+    </div>
+  </div>
 </div>
-
+</div>
