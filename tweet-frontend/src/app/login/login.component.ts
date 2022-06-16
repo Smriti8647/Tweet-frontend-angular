@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../Services/user.service';
@@ -10,12 +11,15 @@ import { UserService } from '../Services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  username: string;
-  password: string;
+  //username: string;
+  //password: string;
   error: Boolean;
   errorMessage: String;
   loading: boolean
   subscribe: Subscription;
+
+  username= new FormControl('', Validators.required);
+      password= new FormControl('', Validators.required);
 
   constructor(private userService: UserService,
     private router: Router) {
@@ -23,8 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.username = "";
-    this.password = "";
     this.error = false;
     this.loading = false;
     console.log("initially username " + this.username)
@@ -33,9 +35,11 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit() {
-    this.userService.login(this.username, this.password).subscribe(result => {
+    console.log(" username " + this.username.value)
+    this.userService.login(this.username.value, this.password.value).subscribe(result => {
       if (result === true) {
-        this.router.navigate(['home', this.username]);
+        console.log('result true');
+        this.router.navigate(['home', this.username.value]);
       }
       else {
         this.error = true;
@@ -45,6 +49,11 @@ export class LoginComponent implements OnInit {
           this.errorMessage = 'System Error';
       }
     })
+
+  }
+
+  forgotPass(){
+    this.router.navigate(['forgot-password']);
 
   }
   ngOndestroy() {

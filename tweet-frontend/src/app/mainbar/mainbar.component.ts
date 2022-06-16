@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mainbar',
@@ -8,7 +9,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class MainbarComponent implements OnInit {
 
   @Output() mainbarEvent = new EventEmitter<string>();
-  constructor() { }
+  search:String;
+  constructor( private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -21,6 +23,10 @@ export class MainbarComponent implements OnInit {
 
   onClick(value:string){
     this.mainbarEvent.emit(value);
+  }
+
+  onSearch(){
+    this.router.navigate(['../../search-users', this.search]);
   }
 
 }

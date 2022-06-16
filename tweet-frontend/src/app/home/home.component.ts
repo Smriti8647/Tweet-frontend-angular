@@ -18,7 +18,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = this.route.snapshot.paramMap.get('username');
-    console.log(this.username);
     this.showUserTweets=true;
   }
 
