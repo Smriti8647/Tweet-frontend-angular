@@ -82,3 +82,13 @@ input[type=text], input[type=password] {
     border: 6px solid transparent;
     border-color: #fff transparent transparent transparent;
   }
+
+p{
+  display: inline;
+}
+
+.register-button:disabled{
+  background-color: #95a2a8; 
+  cursor: default;
+  opacity:0.9;
+}
