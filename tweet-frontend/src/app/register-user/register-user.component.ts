@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { RegisterUser } from '../model/RegisterUser';
 import { UserService } from '../Services/user.service';
 
@@ -16,12 +17,13 @@ export class RegisterUserComponent implements OnInit {
     'In what city were you born?'
   ]
 
+
   avtar = [
-    'avtar1',
-    'avtar2',
-    'avtar3'
+    '/assets/avtar1.png', '/assets/avtar2.png', '/assets/avtar3.png', '/assets/avtar4.png', '/assets/avtar5.png', '/assets/avtar6.png', '/assets/avtar7.png', '/assets/avtar8.png', '/assets/avtar9.png', '/assets/avtar10.png'
   ]
-  registerRequest:RegisterUser;
+  registerRequest: RegisterUser;
+  isRegistered: Boolean;
+  subscribe: Subscription;
 
   profileForm: FormGroup;
   passwordError = false;
@@ -37,22 +39,23 @@ export class RegisterUserComponent implements OnInit {
       password: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required),
       contactNumber: new FormControl('', [Validators.required, Validators.pattern('^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$')]),
-      questions: new FormControl(null),
-      avtar: new FormControl(null),
+      questions: new FormControl(null, Validators.required),
+      avtar: new FormControl(null, Validators.required),
       answer: new FormControl('', Validators.required),
     });
     this.profileForm.controls['questions'].setValue('What is the name of your first school?', { onlySelf: true });
-    this.profileForm.controls['avtar'].setValue('avtar1', { onlySelf: true });
+    //this.profileForm.controls['avtar'].setValue('avtar1', { onlySelf: true });
+    this.isRegistered = false;
   }
 
   onSubmit() {
-    if (this.profileForm.controls['password'].value == this.profileForm.controls['confirmPassword'].value){
+    if (this.profileForm.controls['password'].value == this.profileForm.controls['confirmPassword'].value) {
       this.passwordError = false;
-      if(this.profileForm.valid){
-        this.registerRequest={
-          loginId:this.profileForm.controls['username'].value,
+      if (this.profileForm.valid) {
+        this.registerRequest = {
+          loginId: this.profileForm.controls['username'].value,
           ans: this.profileForm.controls['answer'].value,
-          avtar: this.profileForm.controls['avtar'].value,
+          avtar: this.profileForm.controls['avtar'].value.substring(8, 14),
           contactNumber: this.profileForm.controls['contactNumber'].value,
           email: this.profileForm.controls['emailId'].value,
           firstName: this.profileForm.controls['firstName'].value,
@@ -60,20 +63,29 @@ export class RegisterUserComponent implements OnInit {
           password: this.profileForm.controls['password'].value,
           question: this.profileForm.controls['questions'].value
         }
-        this.userService.registerUser(this.registerRequest).subscribe(result=>{
+        this.userService.registerUser(this.registerRequest).subscribe(result => {
           console.log(result);
-        },
-        (error)=>{
-          console.log(error);
-        })
+          this.isRegistered = true;
+          //TODO - TO SHOW USER SUCCESFULLY REGISTERED ON POPUP
 
-      }}
-      
-    else
-      this.passwordError = true;
+        },
+          (error) => {
+            console.log(error);
+          })
+
+      }
+      else {
+        this.passwordError = true;
+        this.profileForm.controls['password'].setErrors({ 'incorrect': true });
+      }
+    }
+
+
   }
 
-
+  ngOndestroy() {
+    this.subscribe.unsubscribe;
+  }
 
 
 }

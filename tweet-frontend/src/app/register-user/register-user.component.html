@@ -15,11 +15,11 @@
         <large *ngIf="profileForm.get('lastName').invalid && profileForm.get('lastName').touched"
             class="text-danger">Last Name is Required</large>
 
-        <div><label><b>Email*</b> <input type="password" formControlName="emailId" name="emailId"></label></div>
+        <div><label><b>Email*</b> <input type="text" formControlName="emailId" name="emailId"></label></div>
         <large *ngIf="profileForm.get('emailId').invalid && profileForm.get('emailId').touched"
             class="text-danger">Invalid emailId</large>
 
-        <div><label><b>Password*: </b><input type="text" formControlName="password" name="password"></label></div>
+        <div><label><b>Password*: </b><input type="password" formControlName="password" name="password"></label></div>
         <large *ngIf="profileForm.get('password').invalid && profileForm.get('password').touched"
             class="text-danger">Password is Required</large>
 
@@ -28,7 +28,7 @@
         <large *ngIf="profileForm.get('confirmPassword').invalid && profileForm.get('confirmPassword').touched"
             class="text-danger">Confirm Password is Required</large>
 
-        <div *ngIf="passwordError">Password does not match</div>
+        <div class="text-danger" *ngIf="passwordError">Password does not match</div>
 
         <div><label><b>Contact Number*: </b><input type="text" formControlName="contactNumber"
                     name="contactNumber"></label></div>
@@ -53,16 +53,16 @@
         <div class="dropdown"><label for="avtar"><b>Choose an Avtar:</b></label>
 
             <div class="dropdown-select">
-            <select formControlName="avtar">
-                <option *ngFor="let av of avtar" [ngValue]="av">
-                    {{ av }}
-                </option>
-            </select>
+                <label *ngFor="let av of avtar" [ngValue]="av">
+            <input type="radio" formControlName="avtar" value="{{av}}">
+               
+                    <img src="{{av}}"  class="avtar" >
+                </label>
         </div>
         </div>
         <p>Complete the form to enable button.</p>
         <div><button type="submit" class="register-button" [disabled]="!profileForm.valid">submit</button></div>
-        <!-- <div><button type="submit" class="login-button" [disabled]="!profileForm.valid">submit</button></div> -->
+        <div *ngIf="isRegistered">User Successfully Registered</div>
         <div class="container signin">
             <p>Already have an account? <a href="/login">Login</a>.</p>
         </div>

@@ -6,7 +6,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
-import { SearchUserComponent } from './search-user/search-user.component';
 import { TweetComponent } from './tweet/tweet.component';
 
 const routes: Routes = [{
@@ -19,8 +18,7 @@ const routes: Routes = [{
   },
   { path: 'tweets/:username', component: TweetComponent },
   { path: 'all-tweets', component: AllTweetsComponent},
-  { path: 'all-users', component: AllUsersComponent},
-  { path: 'search-users/:username', component: SearchUserComponent},
+  { path: 'users/:username', component: AllUsersComponent},
   { path: 'register-user', component: RegisterUserComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
 // {

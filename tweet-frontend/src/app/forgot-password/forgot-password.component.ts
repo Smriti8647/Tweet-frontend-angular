@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { UserService } from '../Services/user.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class ForgotPasswordComponent implements OnInit {
   ]
   forgotPassForm: FormGroup
   forgotPassRequest;
+  subscribe: Subscription;
   constructor(private userService: UserService) { }
 
 
@@ -40,11 +42,16 @@ export class ForgotPasswordComponent implements OnInit {
     this.userService.forgotPassword(this.forgotPassRequest, this.forgotPassForm.controls['username'].value)
     .subscribe(result => {
       console.log(result);
+      //TODO- TO SHOW ON POPUP THAT PASSWOED IN SUCCESFULLY CHANGED
     },
     error=>{
       console.log(error);
     }
     )
+  }
+
+  ngOndestroy() {
+    this.subscribe.unsubscribe;
   }
 
 }

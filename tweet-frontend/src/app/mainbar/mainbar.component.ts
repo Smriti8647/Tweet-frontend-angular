@@ -26,7 +26,11 @@ export class MainbarComponent implements OnInit {
   }
 
   onSearch(){
-    this.router.navigate(['../../search-users', this.search]);
+    this.router.navigate(['../../users', this.search]);
+  }
+
+  onLogout(){
+    localStorage.clear();
   }
 
 }

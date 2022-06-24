@@ -13,7 +13,6 @@ import { CreateTweetComponent } from './create-tweet/create-tweet.component';
 import { AllTweetsComponent } from './all-tweets/all-tweets.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { CommonModule } from '@angular/common';
-import { SearchUserComponent } from './search-user/search-user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ModelPopupComponent } from './model-popup/model-popup.component';
@@ -28,7 +27,6 @@ import { ModelPopupComponent } from './model-popup/model-popup.component';
     CreateTweetComponent,
     AllTweetsComponent,
     AllUsersComponent,
-    SearchUserComponent,
     RegisterUserComponent,
     ForgotPasswordComponent,
     ModelPopupComponent
