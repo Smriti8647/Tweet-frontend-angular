@@ -38,6 +38,7 @@ $maincolor: #187ca7;
 .card{  
  @include dimensions( 600px,  100px);
   padding: 20px;
+  margin: 20px;
   border-radius: 3px;
   background-color: white;
   box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
@@ -52,7 +53,26 @@ $maincolor: #187ca7;
     position: absolute;
 }
 }  
+.comment-card{
+  @include dimensions( 600px,  100px);
+  padding: 20px;
+  margin: 20px;
+  margin-top: -20px;
+  padding-top: -5px;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+  
+  overflow: hidden;
+  &:after {
+    content: '';
+    display: block;
+    width: 190px;
+    height: 300px;
 
+    position: absolute;
+}
+}
 .firstinfo{
   @extend %flex;
   flex-direction: row;  
@@ -68,7 +88,12 @@ height: 120px;
     h1{ font-size: 1.8em;}
    
     p.bio{
-      padding: 10px 0px;
+      width: 380px;
+    height: 70px;
+    resize: none;
+    overflow: hidden;
+    background-color: white;
+      padding: 10px;
       color: #5A5A5A;
       line-height: 1.2;
       font-style: initial;
@@ -94,7 +119,7 @@ h1,h2{
     border-radius:7px;
     font-size:15px;
     padding:5px;
-    margin-top:0px;    
+    margin-top:10px;    
 }
 
 .button-container textarea:focus { 
@@ -114,18 +139,19 @@ time{
 }
 
 .like{
-  border:2px solid #dadada;
+  border:2px solid #ece7e7;
     border-radius:7px;
   padding:5px;
   width: 48px;
   height: 45px;
-  margin-top: -200px;
- 
+  margin-top:9px; 
+  background: none;
+  border: none;
 margin-right: 20px;
 }
 .button-container img{ 
   border-radius: 50%;
-  width: 35px;
+  width: 40px;
 height: 35px;
 }
 
@@ -137,4 +163,99 @@ height: 35px;
   color: #187ca7;
   text-decoration: underline;
   cursor: pointer;
+  display: inline;
+  img{
+    width:40px;
+    height: 40px;
+  }
+  h3{
+    display: inline;
+  }
+}
+
+.comment{
+  background: none;
+    border: none;
+  position: absolute;
+  margin: 20px;
+  width: 60px;
+height: 35px;
+ 
+}
+
+
+.menu-nav {
+       width: 400px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-item {
+  color: #FCC;
+  padding: 3px;
+}
+
+.three-dots:after {
+  cursor: pointer;
+  color: #444;
+  content: '\2807';
+  font-size: 20px;
+  padding: 0 5px;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+a div {
+  padding: 2px;
+}
+
+.dropdown {
+  position: absolute;
+  right: 10px;
+  background-color: rgb(143, 143, 238);
+  width: 200px;
+  outline: indigo;
+  opacity: 0;
+  z-index: -1;
+  max-height: 0;
+  transition: opacity 0.1s, z-index 0.1s, max-height 5s;
+}
+
+.dropdown-container:focus {
+  outline: none;
+}
+
+.dropdown-container:focus .dropdown {
+  opacity: 1;
+  z-index: 100;
+  max-height: 100vh;
+  transition: opacity 0.2s, z-index 0.2s, max-height 0.2s;
+}
+
+
+.popup-container{
+  @extend %flex;
+  width: 650px;
+  height: 500px;
+  
+}
+
+.app-model-popup{
+  top: 100000px;
+padding: 100px;
+ margin: 100px;
+}
+
+.update img{
+  width: 30px;
+  height: 30px;
+}
+
+.delete img{
+  width: 30px;
+  height: 30px;
 }

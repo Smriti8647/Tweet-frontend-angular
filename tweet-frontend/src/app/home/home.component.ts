@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../Services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private userService: UserService) { }
 
    username:String;
    showAllTweets:Boolean;
@@ -19,6 +20,18 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.username = this.route.snapshot.paramMap.get('username');
     this.showUserTweets=true;
+    this.userService.getUser(this.username).subscribe((user)=>{
+      localStorage.setItem('avtar',user.data['avtar']);
+      localStorage.setItem('userName',user.data['name']);
+      localStorage.setItem('loginId',user.data['loginId']);
+    });
+  }
+
+  getItem(item: string){
+    console.log(localStorage.getItem(item))
+    if(item=='avtar')
+    return '/assets/'+localStorage.getItem(item)+'.png';
+    return localStorage.getItem(item);
   }
 
   onClick(value){

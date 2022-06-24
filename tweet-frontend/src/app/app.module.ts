@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { SearchUserComponent } from './search-user/search-user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ModelPopupComponent } from './model-popup/model-popup.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     AllUsersComponent,
     SearchUserComponent,
     RegisterUserComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ModelPopupComponent
   ],
   imports: [
     BrowserModule,

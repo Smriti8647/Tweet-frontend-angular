@@ -1,31 +1,41 @@
-<div class="user-tweet">
-  <!-- <div class="card">
-    <div><label>Add Tweet: <textarea [(ngModel)]="message" name="message"></textarea></label></div>
-    <div><button type="button" class="submit-button" (click)="createTweet()">Post</button></div>
-  </div> -->
-
-  <h1>{{heading}} TWEETS</h1>
+<div  *ngIf="popup!=true" class="user-tweet">
+ 
   <div *ngIf="tweets" class="container">
     <div *ngFor="let tweet of tweets.reverse(); let i = index" class="content">
       <div class="card">
-
         <div class="firstinfo"><img src="{{tweet.avtar}}" />
           <div class="profileinfo">
             <time>{{tweet.time}}</time>
             <h3>@{{tweet.loginId}}</h3>
-            <p class="bio">{{tweet.message}}</p>
 
-            <hr>
+            <div class="menu-nav">
+                <div class="menu-item"></div>
+                <div class="dropdown-container" tabindex="-1">
+                  <div (click)="do=true" class="three-dots"></div>
+                  <div  *ngIf="do==true" class="dropdown">
+                    <a (click)="openModal(tweet); do=false;"><div class="update"><img src="/assets/Edit.png" > Update</div></a>
+                   <hr> <a (click)="deleteTweet(tweet)"><div class="delete"><img src="/assets/Delete.png"> Delete</div></a>
+                   
+                  </div>
+                </div>
+              </div>
+
+            <p disabled class="bio">{{tweet.message}}</p>
+           <hr>
             <br>
             <div class="button-container"> <button class="like" (click)="setLike(tweet.likeImage, i)"><img
-                  src="{{tweet.likeImage}}" /></button><textarea placeholder="Add your Comment"></textarea><button
-                class="comment">Post </button></div>
-          </div>
+                  src="{{tweet.likeImage}}" /></button><textarea name="a{{i}}" [(ngModel)]="comment[i]" placeholder="Add your Comment"></textarea><button
+                class="comment" (click)="replyTweet(i,tweet.loginId,tweet.id)"><img src="/assets/reply.png"></button></div>
+         
+               
+            </div>
+            
         </div>
         <div *ngIf="tweet.commentList"> <button class="show-button"
-            (click)="showReply(i)">{{isReply.get(i)[1]}}</button></div>
+            (click)="showReply(i)"><h3><img *ngIf="isReply.get(i)[1]=='Show reply'" src="/assets/up-button.png">
+                <img *ngIf="isReply.get(i)[1]!='Show reply'" src="/assets/down-button.png"></h3></button><h3>Comments</h3></div>
       </div>
-      <div *ngIf="tweet.commentList && isReply.get(i)[0]" class="card">
+      <div *ngIf="tweet.commentList && isReply.get(i)[0]" class="comment-card">
         <h2>Commets</h2>
         <div *ngFor="let comment of tweet.commentList.reverse()" class="content">
           <div>
@@ -39,4 +49,10 @@
       </div>
     </div>
   </div>
+ 
+</div>
+<div class="popup-container">
+   <div class="app-model-popup">
+    <app-model-popup  #modal></app-model-popup>
+</div>
 </div>
