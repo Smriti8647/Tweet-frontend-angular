@@ -13,7 +13,8 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      providers: [RouterTestingModule,
+      imports: [RouterTestingModule],
+      providers: [
         {
           provide:UserService,
           useValue:userServiceSpy

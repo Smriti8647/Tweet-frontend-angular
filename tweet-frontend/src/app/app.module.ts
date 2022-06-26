@@ -11,7 +11,6 @@ import { TweetComponent } from './tweet/tweet.component';
 import { HomeComponent } from './home/home.component';
 import { CreateTweetComponent } from './create-tweet/create-tweet.component';
 import { AllTweetsComponent } from './all-tweets/all-tweets.component';
-import { AllUsersComponent } from './all-users/all-users.component';
 import { CommonModule } from '@angular/common';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -26,7 +25,6 @@ import { ModelPopupComponent } from './model-popup/model-popup.component';
     HomeComponent,
     CreateTweetComponent,
     AllTweetsComponent,
-    AllUsersComponent,
     RegisterUserComponent,
     ForgotPasswordComponent,
     ModelPopupComponent
