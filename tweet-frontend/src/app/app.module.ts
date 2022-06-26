@@ -15,6 +15,7 @@ import { AllUsersComponent } from './all-users/all-users.component';
 import { CommonModule } from '@angular/common';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ModelPopupComponent } from './model-popup/model-popup.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     AllTweetsComponent,
     AllUsersComponent,
     RegisterUserComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ModelPopupComponent
   ],
   imports: [
     BrowserModule,

@@ -115,4 +115,38 @@ console.log(result);
     }) 
 
   }
+
+replyTweet( username:String, tweetId:String, commentObj:Comment, ){
+  this.setAuthHeader();
+  return this.client.put(this.baseUrl + username + '/reply/'+tweetId , commentObj,this.httpOptions).subscribe(result=>{
+    console.log(result)
+  },
+  error=>{
+    console.log(error);
+  })
+}
+
+updateTweet( username:String, tweetId:String, updateMessage:String ){
+  let updateObj = {
+    message:updateMessage
+  }
+  this.setAuthHeader();
+  return this.client.put(this.baseUrl + username + '/update/'+tweetId , updateObj,this.httpOptions).subscribe(result=>{
+    console.log(result)
+  },
+  error=>{
+    console.log(error);
+  })
+}
+
+deleteTweet( username:String, tweetId:String){
+  this.setAuthHeader();
+  return this.client.delete(this.baseUrl + username + '/delete/'+tweetId ,this.httpOptions).subscribe(result=>{
+    console.log(result)
+  },
+  error=>{
+    console.log(error);
+  })
+}
+
 }
