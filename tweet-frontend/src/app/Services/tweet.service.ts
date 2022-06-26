@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { ApiResponse } from '../model/ApiResponse';
+import { TagRequest } from '../model/TagRequest';
 
 export interface CreateTweet {
   avtar: String
@@ -49,23 +50,29 @@ export class TweetService {
     return this.client.get<ApiResponse>(this.baseUrl+'all', this.httpOptions);
   }
 
-  public createTweet(username: String, message: String) {
+  public createTweet(username: String, message: String,tagRequest:TagRequest) {
     var avatar;
     this.userService.getUser(username).subscribe(result => {
       avatar = result.data['avtar'];
-      this.callTweetApi(username,message,avatar);
+      this.callTweetApi(username,message,avatar,tagRequest);
     }) 
 
   }
 
-  public callTweetApi(username: String, message: String, avatar:String){
+  public callTweetApi(username: String, message: String, avatar:String,tagRequest:TagRequest){
     let createTweet={
       avtar:avatar,
       loginId: username,
       message: message
     }
+    var tweetId;
     this.setAuthHeader();
-    this.client.post(this.baseUrl + username + '/add', createTweet ,this.httpOptions).subscribe(result=>{
+    this.client.post<ApiResponse>(this.baseUrl + username + '/add', createTweet ,this.httpOptions).subscribe(result=>{
+      tweetId=result.data['tweetId'];
+      tagRequest.tweetId=tweetId;
+      console.log('tagrequest in service'+tagRequest.tweetId+tagRequest.users);
+      this.setTag(tagRequest);
+      
       console.log(result)
     },
     error=>{
@@ -82,6 +89,20 @@ export class TweetService {
       console.log(error);
     }) 
 
+  }
+
+  public taggedTweets(){
+
+  }
+
+  public setTag(tagRequest:TagRequest){
+    this.client.put(this.baseUrl+'tag',tagRequest,this.httpOptions).subscribe(result=>{
+console.log(result);
+    },
+    error=>{
+      console.log(error);
+    });
+   
   }
 
   public removeLike(username: String, tweetId: String) {

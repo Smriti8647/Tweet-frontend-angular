@@ -52,9 +52,9 @@ export class TweetComponent implements OnInit {
     }
   }
 
-  createTweet() {
-    this.service.createTweet(this.username, this.message);
-  }
+  // createTweet() {
+  //   this.service.createTweet(this.username, this.message);
+  // }
 
   mapTweets(data: any) {
     let i = 0;
