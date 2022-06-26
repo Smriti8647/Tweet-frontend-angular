@@ -55,6 +55,7 @@ export class UserService {
       localStorage.clear();
       this.token = result.token
       localStorage.setItem('token',""+this.token);
+      localStorage.setItem('loginId',''+result.loginId);
       subject.next(true);
     },
       (error) => {
