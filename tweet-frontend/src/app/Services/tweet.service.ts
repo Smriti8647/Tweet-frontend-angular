@@ -50,16 +50,16 @@ export class TweetService {
     return this.client.get<ApiResponse>(this.baseUrl+'all', this.httpOptions);
   }
 
-  public createTweet(username: String, message: String,tagRequest:TagRequest) {
+  public createTweet(username: String, message: String, users? : String[]) {
     var avatar;
     this.userService.getUser(username).subscribe(result => {
       avatar = result.data['avtar'];
-      this.callTweetApi(username,message,avatar,tagRequest);
+      this.callTweetApi(username,message,avatar,users);
     }) 
 
   }
 
-  public callTweetApi(username: String, message: String, avatar:String,tagRequest:TagRequest){
+  public callTweetApi(username: String, message: String, avatar:String,users?:String[]){
     let createTweet={
       avtar:avatar,
       loginId: username,
@@ -69,11 +69,8 @@ export class TweetService {
     this.setAuthHeader();
     this.client.post<ApiResponse>(this.baseUrl + username + '/add', createTweet ,this.httpOptions).subscribe(result=>{
       tweetId=result.data['tweetId'];
-      tagRequest.tweetId=tweetId;
-      console.log('tagrequest in service'+tagRequest.tweetId+tagRequest.users);
-      this.setTag(tagRequest);
-      
-      console.log(result)
+      if(users!=null)
+      this.setTag(users,tweetId);
     },
     error=>{
       console.log(error);
@@ -92,10 +89,24 @@ export class TweetService {
   }
 
   public taggedTweets(){
+    this.setAuthHeader();
+    let tweetIdList:String[];
+    const loginId=localStorage.getItem('loginId');
+    this.client.get<ApiResponse>(this.baseUrl+loginId+'/tags',this.httpOptions).subscribe(result=>{
+      tweetIdList = result.data['tweetId'];
+      return this.client.post(this.baseUrl+'/get-tweets',tweetIdList, this.httpOptions)
+    },
+    error=>{
+
+    })
 
   }
 
-  public setTag(tagRequest:TagRequest){
+  public setTag(users:String[],tweetId:String){
+    let tagRequest:TagRequest={
+      tweetId:tweetId,
+      users: users
+    }
     this.client.put(this.baseUrl+'tag',tagRequest,this.httpOptions).subscribe(result=>{
 console.log(result);
     },

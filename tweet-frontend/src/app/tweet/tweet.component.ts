@@ -40,6 +40,17 @@ export class TweetComponent implements OnInit {
           console.log("error" + error);
         });
     }
+    else if(this.username=='tags'){
+      this.service.taggedTweets().subscribe(result=>{
+        this.tweets=<Tweet[]>result.data
+      this.mapTweets(result.data);
+      console.log(this.tweets)
+      },
+      (error) => {
+        console.log("error" + error);
+      })
+
+    }
     else{
       this.heading=this.username.toUpperCase();
     this.service.userTweets(this.username).subscribe(result => {

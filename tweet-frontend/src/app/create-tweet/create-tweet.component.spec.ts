@@ -34,13 +34,14 @@ describe('CreateTweetComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should call the service if form value is valid', () => {
+  it('should call the service when users are tagged', () => {
     component.form.setValue({
       message:'hey',
-      tags:[{tagValue:'sasha'}]
+      tagValue:'sasha'
     });
     expect(component.form.valid).toEqual(true);
     component.createTweet();
     expect(tweetServiceSpy.createTweet).toHaveBeenCalled();
   });
+  
 });

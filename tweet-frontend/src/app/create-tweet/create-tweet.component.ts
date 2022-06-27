@@ -11,7 +11,6 @@ import { TweetService } from '../Services/tweet.service';
 export class CreateTweetComponent implements OnInit {
 
   @Input() username:String;
-  //message:String;
   form:FormGroup;
   tagRequest:TagRequest;
   taggedUsers:String[];
@@ -21,41 +20,24 @@ export class CreateTweetComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.taggedUsers=[];
     this.form=this.fb.group({
       message:new FormControl,
-      tags:this.fb.array([])
+      tagValue:new FormControl
     })
-    this.addTags();
+
   }
 
 
   createTweet(){
-    console.log(this.form.value);
-    console.log(this.form.controls['tags'].value.length);
-    for(let i=0;i<this.form.controls['tags'].value.length;i++){
-      this.taggedUsers.push(this.form.controls['tags'].value[i].tagValue);
+    if(this.form.controls['tagValue'].value!=null){
+    var users = this.form.controls['tagValue'].value.split(" ");
+    
+
+    this.service.createTweet(this.username,this.form.controls['message'].value, users);
     }
-    console.log(this.taggedUsers);
-    this.tagRequest={
-      tweetId:'',
-      users: this.taggedUsers
+    else{
+      this.service.createTweet(this.username,this.form.controls['message'].value);
     }
-    console.log(this.tagRequest);
-    this.service.createTweet(this.username,this.form.controls['message'].value,this.tagRequest);
-  }
-
-  getTags(): FormArray{
-   return this.form.get('tags') as FormArray;
-  }
-
-  addTags(){
-    this.getTags().push(this.fb.group({tagValue:""}))
-
-  }
-
-  removeTag(i){
-    this.getTags().removeAt(i);
   }
 
 }

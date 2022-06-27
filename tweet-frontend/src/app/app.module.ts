@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TweetComponent } from './tweet/tweet.component';
 import { HomeComponent } from './home/home.component';
 import { CreateTweetComponent } from './create-tweet/create-tweet.component';
-import { AllTweetsComponent } from './all-tweets/all-tweets.component';
+// import { AllTweetsComponent } from './all-tweets/all-tweets.component';
 import { CommonModule } from '@angular/common';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -25,7 +25,7 @@ import { UsersComponent } from './users/users.component';
     TweetComponent,
     HomeComponent,
     CreateTweetComponent,
-    AllTweetsComponent,
+    // AllTweetsComponent,
     UsersComponent,
     RegisterUserComponent,
     ForgotPasswordComponent,
