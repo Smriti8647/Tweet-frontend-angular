@@ -2,12 +2,12 @@
 <div class="mainbar-flexbox">
 
   <ul>
-    <li><div class="mainbar-flex-item"><a routerLink="../../login" (click)="onClick('login')">Back to Login</a></div></li>
-    <li><div class="mainbar-flex-item"><a routerLink="../../tweets/all" (click)="onClick('tweets')">Tweets</a></div></li>
-    <li><div class="mainbar-flex-item"><a routerLink="../../users/all" (click)="onClick('allUsers')">All Users</a></div></li>
+    <li><div class="mainbar-flex-item"><a class="login" routerLink="../../login" (click)="onClick('login')">Back to Login</a></div></li>
+    <li><div class="mainbar-flex-item"><a class="all-tweets" routerLink="../../tweets/all" >Tweets</a></div></li>
+    <li><div class="mainbar-flex-item"><a class ="all-users" routerLink="../../users/all" >All Users</a></div></li>
     <li><div class="mainbar-flex-item"><input type="text" [(ngModel)]="search" name="search"><button type="submit" (click)="onSearch()">Search</button></div></li>
-    <li><div class="mainbar-flex-item"><a routerLink="../../tweets/tags" >Tagged tweets</a></div></li>
-    <li> <div class="mainbar-flex-item"><a routerLink="/login" (click)="onLogout()">Logout</a></div> </li>
+    <li><div class="mainbar-flex-item"><a class ="tags" routerLink="../../tweets/tags" >Tagged tweets</a></div></li>
+    <li> <div class="mainbar-flex-item"><a class="logout" routerLink="/login" (click)="onLogout()">Logout</a></div> </li>
   </ul>
   </div>
   

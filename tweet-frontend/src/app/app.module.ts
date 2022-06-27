@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ModelPopupComponent } from './model-popup/model-popup.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ModelPopupComponent } from './model-popup/model-popup.component';
     HomeComponent,
     CreateTweetComponent,
     AllTweetsComponent,
+    UsersComponent,
     RegisterUserComponent,
     ForgotPasswordComponent,
     ModelPopupComponent
