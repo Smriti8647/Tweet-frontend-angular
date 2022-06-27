@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { element } from 'protractor';
 import { TweetService } from '../Services/tweet.service';
 import * as moment from 'moment';
+import { Tweet } from '../model/Tweet';
+import { ModelPopupComponent } from '../model-popup/model-popup.component';
 
 @Component({
   selector: 'app-tweet',
@@ -13,11 +14,11 @@ export class TweetComponent implements OnInit {
 
   //@Input() username: String;
   username: String;
-  tweets;
+  tweets:Tweet[];
   message: String;
   isReply = new Map();
   heading:String;
-
+  comment=[];
   constructor(private service:TweetService,
     private route: ActivatedRoute, private router:Router) { }
   
@@ -32,28 +33,17 @@ export class TweetComponent implements OnInit {
     if(this.username=='all'){
       this.heading='ALL';
       this.service.allTweets().subscribe(result => {
-        this.tweets=result.data;
+        this.tweets=<Tweet[]>result.data;
         this.mapTweets(result.data);
       },
         (error) => {
           console.log("error" + error);
         });
     }
-    else if(this.username=='tags'){
-      this.service.taggedTweets().subscribe(result=>{
-        this.tweets=result.data
-      this.mapTweets(result.data);
-      console.log(this.tweets)
-      },
-      (error) => {
-        console.log("error" + error);
-      })
-
-    }
     else{
       this.heading=this.username.toUpperCase();
     this.service.userTweets(this.username).subscribe(result => {
-       this.tweets=result.data
+       this.tweets=<Tweet[]>result.data
       this.mapTweets(result.data);
       console.log(this.tweets)
     },
@@ -81,6 +71,7 @@ export class TweetComponent implements OnInit {
       }
     });
   }
+
   formatComment(commentList: any) {
     if (commentList)
       return commentList.map(element => {
@@ -101,35 +92,19 @@ export class TweetComponent implements OnInit {
     return '/assets/un-like.png';
   }
  setLike(like: any, index:number){
-  console.log(this.tweets);
-  console.log(this.tweets.length-index-1);
   index=this.tweets.length-index-1;
   if(like==="/assets/like.png"){
     this.tweets[index]['likeImage']='/assets/un-like.png';
-  console.log("un-like"+this.tweets[index]['loginId']+" - "+this.tweets[index]['id']);
-  //this.tweets[index]['isLikeList']= this.tweets[index]['isLikeList'].filter(object =>{
-  // return object!== this.tweets[index]['loginId'];
-  //});
- 
   this.service.removeLike(this.tweets[index]['loginId'],this.tweets[index]['id']);
-
-  //this.ngOnInit();
-  //this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
-    //this.router.navigate(['home', this.username])
-  //});
   } else{
     this.tweets[index]['likeImage']='/assets/like.png';
-   // this.tweets[index]['isLikeList']=  this.tweets[index]['isLikeList'].push(this.tweets[index]['loginId']);
-   // this.service.setAuthHeader();
     this.service.likeTweet(this.tweets[index]['loginId'],this.tweets[index]['id']);
-    console.log("like");
-    console.log("un-like"+this.tweets[index]['loginId']+" - "+this.tweets[index]['id']);
-   // this.ngOnInit();
+  }
+
+ // this.ngOnInit();
    // this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
      // this.router.navigate(['home', this.username])
    // });
-  }
-
   }
 
   showReply(index: any) {
@@ -139,5 +114,38 @@ export class TweetComponent implements OnInit {
       this.isReply.set(index, [false, "Show reply"]);
     }
   }
+
+  replyTweet(index:number, username:String, tweetId:String){
+    let commentObj = <Comment><unknown>{
+      'commentMessage': this.comment[index],
+      'commentor': username,
+      'time':new Date()
+    }
+    this.comment[index]="";
+    this.service.replyTweet(username,tweetId,commentObj).add(()=>{
+      this.ngOnInit();
+    });
+  }
+
+  updateTweet(){
+    console.log("updateTweet")
+  }
+
+
+  @ViewChild('modal', {static: false}) modal: ModelPopupComponent
+
+  openModal(tweet:Tweet) {
+    this.popup=true;
+    this.modal.open("update", tweet);
+    
+  }
+do=false;
+popup=false;
+
+deleteTweet(tweet: Tweet){
+  this.service.deleteTweet(tweet.loginId,tweet.id).add(()=>{
+    this.ngOnInit();
+  });
+}
 
 }

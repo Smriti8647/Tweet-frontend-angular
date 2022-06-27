@@ -20,7 +20,7 @@ export class TweetService {
 
   httpOptions: Object;
 
-  setAuthHeader() {
+  setAuthHeader(){
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -47,75 +47,106 @@ export class TweetService {
 
   public allTweets() {
     this.setAuthHeader();
-    return this.client.get<ApiResponse>(this.baseUrl + 'all', this.httpOptions);
+    return this.client.get<ApiResponse>(this.baseUrl+'all', this.httpOptions);
   }
 
-  public createTweet(username: String, message: String, tagRequest: TagRequest) {
+  public createTweet(username: String, message: String,tagRequest:TagRequest) {
     var avatar;
     this.userService.getUser(username).subscribe(result => {
       avatar = result.data['avtar'];
-      this.callTweetApi(username, message, avatar, tagRequest);
-    })
+      this.callTweetApi(username,message,avatar,tagRequest);
+    }) 
 
   }
 
-  public callTweetApi(username: String, message: String, avatar: String, tagRequest: TagRequest) {
-    let createTweet = {
-      avtar: avatar,
+  public callTweetApi(username: String, message: String, avatar:String,tagRequest:TagRequest){
+    let createTweet={
+      avtar:avatar,
       loginId: username,
       message: message
     }
     var tweetId;
     this.setAuthHeader();
-    this.client.post<ApiResponse>(this.baseUrl + username + '/add', createTweet, this.httpOptions).subscribe(result => {
-      tweetId = result.data['tweetId'];
-      tagRequest.tweetId = tweetId;
-      console.log('tagrequest in service' + tagRequest.tweetId + tagRequest.users);
+    this.client.post<ApiResponse>(this.baseUrl + username + '/add', createTweet ,this.httpOptions).subscribe(result=>{
+      tweetId=result.data['tweetId'];
+      tagRequest.tweetId=tweetId;
+      console.log('tagrequest in service'+tagRequest.tweetId+tagRequest.users);
       this.setTag(tagRequest);
-
+      
       console.log(result)
     },
-      error => {
-        console.log(error);
-      })
+    error=>{
+      console.log(error);
+    })
   }
 
   public likeTweet(username: String, tweetId: String) {
     this.setAuthHeader();
-    this.client.put(this.baseUrl + username + '/like/' + tweetId, {}, this.httpOptions).subscribe(result => {
+    this.client.put(this.baseUrl + username + '/like/'+tweetId , {},this.httpOptions).subscribe(result=>{
       console.log(result)
     },
-      error => {
-        console.log(error);
-      })
+    error=>{
+      console.log(error);
+    }) 
 
   }
 
-  public taggedTweets() {
-    this.setAuthHeader();
-    const loginId=localStorage.getItem('loginId');
-    return this.client.get<ApiResponse>(this.baseUrl+loginId+'/tags',this.httpOptions);
+  public taggedTweets(){
 
   }
 
-  public setTag(tagRequest: TagRequest) {
-    this.client.put(this.baseUrl + 'tag', tagRequest, this.httpOptions).subscribe(result => {
-      console.log(result);
+  public setTag(tagRequest:TagRequest){
+    this.client.put(this.baseUrl+'tag',tagRequest,this.httpOptions).subscribe(result=>{
+console.log(result);
     },
-      error => {
-        console.log(error);
-      });
-
+    error=>{
+      console.log(error);
+    });
+   
   }
 
   public removeLike(username: String, tweetId: String) {
     this.setAuthHeader();
-    this.client.put(this.baseUrl + username + '/remove-like/' + tweetId, {}, this.httpOptions).subscribe(result => {
+    this.client.put(this.baseUrl + username + '/remove-like/'+tweetId , {},this.httpOptions).subscribe(result=>{
       console.log(result)
     },
-      error => {
-        console.log(error);
-      })
+    error=>{
+      console.log(error);
+    }) 
 
   }
+
+replyTweet( username:String, tweetId:String, commentObj:Comment, ){
+  this.setAuthHeader();
+  return this.client.put(this.baseUrl + username + '/reply/'+tweetId , commentObj,this.httpOptions).subscribe(result=>{
+    console.log(result)
+  },
+  error=>{
+    console.log(error);
+  })
+}
+
+updateTweet( username:String, tweetId:String, updateMessage:String ){
+  let updateObj = {
+    message:updateMessage
+  }
+  this.setAuthHeader();
+  return this.client.put(this.baseUrl + username + '/update/'+tweetId , updateObj,this.httpOptions).subscribe(result=>{
+    console.log(result)
+  },
+  error=>{
+    console.log(error);
+  })
+}
+
+deleteTweet( username:String, tweetId:String){
+  this.setAuthHeader();
+  return this.client.delete(this.baseUrl + username + '/delete/'+tweetId ,this.httpOptions).subscribe(result=>{
+    console.log(result)
+  },
+  error=>{
+    console.log(error);
+  })
+}
+
 }
