@@ -1,18 +1,17 @@
-import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../Services/user.service';
 
-import { LoginComponent } from './login.component';
+import { UsersComponent } from './users.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-  let userServiceSpy=jasmine.createSpyObj('UserService',['forgotPassword']);
+describe('UsersComponent', () => {
+  let component: UsersComponent;
+  let fixture: ComponentFixture<UsersComponent>;
+  let userServiceSpy=jasmine.createSpyObj('UserService',['getAllUsers','searchUsers']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [ UsersComponent ],
       imports: [RouterTestingModule],
       providers: [
         {
@@ -24,7 +23,7 @@ describe('LoginComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

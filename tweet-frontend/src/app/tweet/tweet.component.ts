@@ -44,6 +44,17 @@ export class TweetComponent implements OnInit {
           console.log("error" + error);
         });
     }
+    else if(this.username=='tags'){
+      this.service.taggedTweets().subscribe(result=>{
+        this.tweets=<Tweet[]>result.data
+      this.mapTweets(result.data);
+      console.log(this.tweets)
+      },
+      (error) => {
+        console.log("error" + error);
+      })
+
+    }
     else{
       this.loginId=this.username.toString();
       this.heading=this.username.toUpperCase();
@@ -57,6 +68,10 @@ export class TweetComponent implements OnInit {
       });
     }
   }
+
+  // createTweet() {
+  //   this.service.createTweet(this.username, this.message);
+  // }
 
   mapTweets(data: any) {
     let i = 0;

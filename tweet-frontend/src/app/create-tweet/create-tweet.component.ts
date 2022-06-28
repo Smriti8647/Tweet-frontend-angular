@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { TagRequest } from '../model/TagRequest';
 import { TweetService } from '../Services/tweet.service';
 
 @Component({
@@ -9,15 +11,33 @@ import { TweetService } from '../Services/tweet.service';
 export class CreateTweetComponent implements OnInit {
 
   @Input() username:String;
-  message:String;
+  form:FormGroup;
+  tagRequest:TagRequest;
+  taggedUsers:String[];
+  
 
-  constructor(private service:TweetService) { }
+  constructor(private service:TweetService,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.form=this.fb.group({
+      message:new FormControl,
+      tagValue:new FormControl
+    })
+
   }
 
+
   createTweet(){
-    this.service.createTweet(this.username,this.message);
+    if(this.form.controls['tagValue'].value!=null){
+    var users = this.form.controls['tagValue'].value.split(" ");
+    
+
+    this.service.createTweet(this.username,this.form.controls['message'].value, users);
+    }
+    else{
+      this.service.createTweet(this.username,this.form.controls['message'].value);
+    }
   }
 
 }

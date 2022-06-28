@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AllTweetsComponent } from './all-tweets/all-tweets.component';
-import { AllUsersComponent } from './all-users/all-users.component';
+// import { AllTweetsComponent } from './all-tweets/all-tweets.component';
+import { UsersComponent } from './users/users.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -17,9 +17,9 @@ const routes: Routes = [{
       ]
   },
   { path: 'tweets/:username', component: TweetComponent },
-  { path: 'all-tweets', component: AllTweetsComponent},
-  { path: 'users/:username', component: AllUsersComponent},
+  // { path: 'all-tweets', component: AllTweetsComponent},
   { path: 'register-user', component: RegisterUserComponent},
+  { path: 'users/:username', component: UsersComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
 // {
 //   // path: 'user-tweets/:username', component: TweetComponent

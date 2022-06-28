@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { ApiResponse } from '../model/ApiResponse';
+import { TagRequest } from '../model/TagRequest';
+import { of, Subject } from 'rxjs';
 
 export interface CreateTweet {
   avtar: String
@@ -49,24 +51,27 @@ export class TweetService {
     return this.client.get<ApiResponse>(this.baseUrl+'all', this.httpOptions);
   }
 
-  public createTweet(username: String, message: String) {
+  public createTweet(username: String, message: String, users? : String[]) {
     var avatar;
     this.userService.getUser(username).subscribe(result => {
       avatar = result.data['avtar'];
-      this.callTweetApi(username,message,avatar);
+      this.callTweetApi(username,message,avatar,users);
     }) 
 
   }
 
-  public callTweetApi(username: String, message: String, avatar:String){
+  public callTweetApi(username: String, message: String, avatar:String,users?:String[]){
     let createTweet={
       avtar:avatar,
       loginId: username,
       message: message
     }
+    var tweetId;
     this.setAuthHeader();
-    this.client.post(this.baseUrl + username + '/add', createTweet ,this.httpOptions).subscribe(result=>{
-      console.log(result)
+    this.client.post<ApiResponse>(this.baseUrl + username + '/add', createTweet ,this.httpOptions).subscribe(result=>{
+      tweetId=result.data['tweetId'];
+      if(users!=null)
+      this.setTag(users,tweetId);
     },
     error=>{
       console.log(error);
@@ -82,6 +87,40 @@ export class TweetService {
       console.log(error);
     }) 
 
+  }
+
+  public taggedTweets(){
+    var subject=new Subject<ApiResponse>();
+    this.setAuthHeader();
+    let tweetIdList:String[];
+    const loginId=localStorage.getItem('loginId');
+    this.client.get<ApiResponse>(this.baseUrl+loginId+'/tags',this.httpOptions).subscribe(result=>{
+      tweetIdList = result.data['tweetId'];
+      this.client.post(this.baseUrl+'/get-tweets',tweetIdList, this.httpOptions).subscribe((data)=>{
+        subject.next(data);
+      },
+      error=>{
+        subject.next(error);
+      });
+    },
+    error=>{
+      subject.next(error);
+    })
+return subject;
+  }
+
+  public setTag(users:String[],tweetId:String){
+    let tagRequest:TagRequest={
+      tweetId:tweetId,
+      users: users
+    }
+    this.client.put(this.baseUrl+'tag',tagRequest,this.httpOptions).subscribe(result=>{
+console.log(result);
+    },
+    error=>{
+      console.log(error);
+    });
+   
   }
 
   public removeLike(username: String, tweetId: String) {

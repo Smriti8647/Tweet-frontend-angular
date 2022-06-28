@@ -5,11 +5,11 @@ import { UserResponse } from '../model/UserResponse';
 import { UserService } from '../Services/user.service';
 
 @Component({
-  selector: 'app-all-users',
-  templateUrl: './all-users.component.html',
-  styleUrls: ['./all-users.component.scss']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss']
 })
-export class AllUsersComponent implements OnInit {
+export class UsersComponent implements OnInit {
 
 username:String;
   constructor(private userService: UserService,
