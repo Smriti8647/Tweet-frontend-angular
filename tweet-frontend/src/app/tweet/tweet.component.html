@@ -1,3 +1,4 @@
+<div clsaa="tweet-container">
 <div  *ngIf="popup!=true" class="user-tweet">
  
   <div *ngIf="tweets" class="container">
@@ -8,14 +9,13 @@
             <time>{{tweet.time}}</time>
             <h3>@{{tweet.loginId}}</h3>
 
-            <div class="menu-nav">
+            <div *ngIf="tweet.loginId==loginId" class="menu-nav">
                 <div class="menu-item"></div>
                 <div class="dropdown-container" tabindex="-1">
-                  <div (click)="do=true" class="three-dots"></div>
-                  <div  *ngIf="do==true" class="dropdown">
-                    <a (click)="openModal(tweet); do=false;"><div class="update"><img src="/assets/Edit.png" > Update</div></a>
+                  <div (click)="showThreeDots=true" class="three-dots"></div>
+                  <div  *ngIf="showThreeDots==true" class="dropdown">
+                    <a (click)="openModal(tweet); showThreeDots=false;"><div class="update"><img src="/assets/Edit.png" > Update</div></a>
                    <hr> <a (click)="deleteTweet(tweet)"><div class="delete"><img src="/assets/Delete.png"> Delete</div></a>
-                   
                   </div>
                 </div>
               </div>
@@ -54,5 +54,6 @@
 <div class="popup-container">
    <div class="app-model-popup">
     <app-model-popup  #modal></app-model-popup>
+</div>
 </div>
 </div>

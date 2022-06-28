@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { ApiResponse } from '../model/ApiResponse';
 import { TagRequest } from '../model/TagRequest';
+import { of, Subject } from 'rxjs';
 
 export interface CreateTweet {
   avtar: String
@@ -89,17 +90,23 @@ export class TweetService {
   }
 
   public taggedTweets(){
+    var subject=new Subject<ApiResponse>();
     this.setAuthHeader();
     let tweetIdList:String[];
     const loginId=localStorage.getItem('loginId');
     this.client.get<ApiResponse>(this.baseUrl+loginId+'/tags',this.httpOptions).subscribe(result=>{
       tweetIdList = result.data['tweetId'];
-      return this.client.post(this.baseUrl+'/get-tweets',tweetIdList, this.httpOptions)
+      this.client.post(this.baseUrl+'/get-tweets',tweetIdList, this.httpOptions).subscribe((data)=>{
+        subject.next(data);
+      },
+      error=>{
+        subject.next(error);
+      });
     },
     error=>{
-
+      subject.next(error);
     })
-
+return subject;
   }
 
   public setTag(users:String[],tweetId:String){
