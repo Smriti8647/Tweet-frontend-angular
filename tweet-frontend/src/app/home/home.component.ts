@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
   }
 
   getItem(item: string){
-    console.log(localStorage.getItem(item))
     if(item=='avtar')
     return '/assets/'+localStorage.getItem(item)+'.png';
     return localStorage.getItem(item);

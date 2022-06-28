@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../Services/user.service';
@@ -11,15 +11,13 @@ import { UserService } from '../Services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  //username: string;
-  //password: string;
   error: Boolean;
   errorMessage: String;
   loading: boolean
   subscribe: Subscription;
+  loginForm: FormGroup
 
-  username= new FormControl('', Validators.required);
-      password= new FormControl('', Validators.required);
+   
 
   constructor(private userService: UserService,
     private router: Router) {
@@ -27,19 +25,19 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loginForm = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
     this.error = false;
     this.loading = false;
-    console.log("initially username " + this.username)
-    console.log("initially password " + this.password)
   }
 
 
   onSubmit() {
-    console.log(" username " + this.username.value)
-    this.userService.login(this.username.value, this.password.value).subscribe(result => {
+    this.userService.login(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value).subscribe(result => {
       if (result === true) {
-        console.log('result true');
-        this.router.navigate(['home', this.username.value]);
+        this.router.navigate(['home', this.loginForm.controls['username'].value]);
       }
       else {
         this.error = true;

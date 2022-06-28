@@ -1,8 +1,8 @@
 <div class="login-container">
     <img src="/assets/logo.jpg" alt="logo" class="logo">
-    <form>
-      <div><label><b>Username: </b><input type="text" [formControl]="username" name="username"></label></div>
-      <div><label><b>Password: </b><input type="password" [formControl]="password" name="password"></label></div>
+    <form [formGroup]="loginForm" >
+      <div><label><b>Username: </b><input type="text" formControlName="username" name="username"></label></div>
+      <div><label><b>Password: </b><input type="password" formControlName="password" name="password"></label></div>
       <div><button type="button" class="login-button" (click)="onSubmit()">Login</button></div>
 
       <span *ngIf="error">{{errorMessage}}</span>

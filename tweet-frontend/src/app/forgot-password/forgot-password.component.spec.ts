@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { UserService } from '../Services/user.service';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
@@ -9,7 +9,9 @@ describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
   let userServiceSpy=jasmine.createSpyObj('UserService',['forgotPassword']);
-  userServiceSpy.forgotPassword.and.returnValue(of());
+  const successResult='Succesfuly changed Password';
+  const failResult='Error Occurred'
+  
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -41,6 +43,7 @@ describe('ForgotPasswordComponent', () => {
       questions: 'What is the name of your first school?',
       answer: 'dsps',
     });
+    userServiceSpy.forgotPassword.and.returnValue(of(successResult));
     expect(component.forgotPassForm.valid).toEqual(true);
     component.onSubmit();
     expect(userServiceSpy.forgotPassword).toHaveBeenCalled();
@@ -54,6 +57,21 @@ describe('ForgotPasswordComponent', () => {
       answer: 'dsps',
     });
     expect(component.forgotPassForm.valid).toEqual(false);
+  });
+
+  it('should show error on screen if service send error response', () => {
+    component.forgotPassForm.setValue({
+      username: 'sasha',
+      password: 'qwe',
+      questions: 'What is the name of your first school?',
+      answer: 'dsps',
+    });
+    userServiceSpy.forgotPassword.and.callFake(()=>{
+      return throwError(failResult);
+    })
+    component.onSubmit();
+    expect(userServiceSpy.forgotPassword).toHaveBeenCalled();
+    expect(component.showError).toBeTrue;
   });
 
 

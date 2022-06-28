@@ -61,8 +61,10 @@
         </div>
         </div>
         <p>Complete the form to enable button.</p>
+        <div class="success-registration" *ngIf="isRegistered">User Successfully Registered</div>
+        <div class="error" *ngIf="showError">{{error}}</div>
         <div><button type="submit" class="register-button" [disabled]="!profileForm.valid">submit</button></div>
-        <div *ngIf="isRegistered">User Successfully Registered</div>
+        
         <div class="container signin">
             <p>Already have an account? <a href="/login">Login</a>.</p>
         </div>

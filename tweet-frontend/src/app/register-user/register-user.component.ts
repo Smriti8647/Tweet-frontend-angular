@@ -24,6 +24,8 @@ export class RegisterUserComponent implements OnInit {
   registerRequest: RegisterUser;
   isRegistered: Boolean;
   subscribe: Subscription;
+  showError:Boolean;
+  error:String;
 
   profileForm: FormGroup;
   passwordError = false;
@@ -64,20 +66,17 @@ export class RegisterUserComponent implements OnInit {
           question: this.profileForm.controls['questions'].value
         }
         this.userService.registerUser(this.registerRequest).subscribe(result => {
-          console.log(result);
           this.isRegistered = true;
-          //TODO - TO SHOW USER SUCCESFULLY REGISTERED ON POPUP
 
         },
           (error) => {
-            console.log(error);
+            this.showError=true;
+            this.error=error.error;
           })
-
-      }
-      else {
-        this.passwordError = true;
-        this.profileForm.controls['password'].setErrors({ 'incorrect': true });
-      }
+      }     
+    }
+    else {
+      this.passwordError = true;
     }
 
 

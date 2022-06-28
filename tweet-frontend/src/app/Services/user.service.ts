@@ -68,11 +68,11 @@ export class UserService {
   }
   
   registerUser(registerRequest:RegisterUser){
-    return this.client.post(this.authUrl+'register', registerRequest);
+    return this.client.post(this.authUrl+'register', registerRequest, {responseType: 'text'});
   }
 
   forgotPassword(forgotPasswordRequest,username){
-    return this.client.post(this.authUrl+username+'/forgot', forgotPasswordRequest);
+    return this.client.post(this.authUrl+username+'/forgot', forgotPasswordRequest, {responseType: 'text'});
 
   }
   getUser(username:String){

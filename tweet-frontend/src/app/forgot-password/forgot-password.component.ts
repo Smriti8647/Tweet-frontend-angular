@@ -18,6 +18,9 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPassForm: FormGroup
   forgotPassRequest;
   subscribe: Subscription;
+  showSuccess:Boolean;
+  showError:Boolean
+  error:String;
   constructor(private userService: UserService) { }
 
 
@@ -32,8 +35,6 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("onsubmit");
-    console.log(this.forgotPassForm.controls['questions'].value);
     this.forgotPassRequest = {
       ques: this.forgotPassForm.controls['questions'].value,
       ans: this.forgotPassForm.controls['answer'].value,
@@ -41,11 +42,11 @@ export class ForgotPasswordComponent implements OnInit {
     }
     this.userService.forgotPassword(this.forgotPassRequest, this.forgotPassForm.controls['username'].value)
     .subscribe(result => {
-      console.log(result);
-      //TODO- TO SHOW ON POPUP THAT PASSWOED IN SUCCESFULLY CHANGED
+      this.showSuccess=true;
     },
     error=>{
-      console.log(error);
+      this.showError=true;
+      this.error=error.error;
     }
     )
   }

@@ -45,10 +45,15 @@ describe('MainbarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   it('navigate to "search" takes you to /search', fakeAsync(() => {
-    router.navigate(['../../users', 'sa']);
-    tick();
+    component.search='sa';
+    component.onSearch();
+    // router.navigate(['../../users', 'sa']);
+    // tick();
+    fixture.whenStable().then(() => {
     expect(location.path()).toBe('/users/sa');
+  });
   }));
 
   it('navigate to login ', fakeAsync(() => {

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { UserService } from '../Services/user.service';
 
 import { RegisterUserComponent } from './register-user.component';
@@ -9,7 +9,8 @@ describe('RegisterUserComponent', () => {
   let component: RegisterUserComponent;
   let fixture: ComponentFixture<RegisterUserComponent>;
   let userServiceSpy=jasmine.createSpyObj('UserService',['registerUser']);
-  userServiceSpy.registerUser.and.returnValue(of());
+  const result='Succesfuly Registered with login id sasha';
+  //userServiceSpy.registerUser.and.returnValue(of());
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -65,23 +66,6 @@ describe('RegisterUserComponent', () => {
     expect(component.profileForm.valid).toEqual(false);
   });
 
-  
-
-  it('should be valid if form value is valid', () => {
-    component.profileForm.setValue({
-      username: 'sasha',
-      firstName:'Sasha',
-      lastName: 'Harris',
-      emailId: 'valid@email.com',
-      password: 'qwe',
-      confirmPassword: 'qwe',
-      contactNumber: '9876543210',
-      questions: 'question',
-      avtar: 'avtar1',
-      answer: 'ans',
-    });
-    expect(component.profileForm.valid).toEqual(true);
-  });
 
   it('should allow user to register', () => {
     const formData = {
@@ -97,11 +81,52 @@ describe('RegisterUserComponent', () => {
       answer: 'ans',
     };
     component.profileForm.setValue(formData);
+    userServiceSpy.registerUser.and.callFake(()=>{
+      return of(result);
+    })
     component.onSubmit();
     expect(userServiceSpy.registerUser).toHaveBeenCalled();
+    expect(component.isRegistered).toBeTrue;
   })
 
-  
+  it('should show error if password and confirm password does not match', () => {
+    component.profileForm.setValue({
+      username: 'sasha',
+      firstName:'Sasha',
+      lastName: 'Harris',
+      emailId: 'valid@email.com',
+      password: 'qwe',
+      confirmPassword: 'qwer',
+      contactNumber: '9876543210',
+      questions: 'question',
+      avtar: 'avtar1',
+      answer: 'ans',
+    });
+    component.onSubmit();
+    expect(component.passwordError).toEqual(true);
+  });
+
+  it('should show error on screen if service send error response', () => {
+    const formData = {
+      username: 'sasha',
+      firstName:'Sasha',
+      lastName: 'Harris',
+      emailId: 'valid@email.com',
+      password: 'qwe',
+      confirmPassword: 'qwe',
+      contactNumber: '9876543210',
+      questions: 'question',
+      avtar: 'avtar1',
+      answer: 'ans',
+    };
+    component.profileForm.setValue(formData);
+    userServiceSpy.registerUser.and.callFake(()=>{
+      return throwError(result);
+    })
+    component.onSubmit();
+    expect(userServiceSpy.registerUser).toHaveBeenCalled();
+    expect(component.showError).toBeTrue;
+  })
 
 
 });
