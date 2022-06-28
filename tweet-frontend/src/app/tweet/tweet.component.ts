@@ -12,25 +12,29 @@ import { ModelPopupComponent } from '../model-popup/model-popup.component';
 })
 export class TweetComponent implements OnInit {
 
-  //@Input() username: String;
+  @ViewChild('modal', {static: false}) modal: ModelPopupComponent
   username: String;
   tweets:Tweet[];
   message: String;
   isReply = new Map();
   heading:String;
   comment=[];
+  loginId:string;
+  showThreeDots=false;
+  popup=false;
+
   constructor(private service:TweetService,
-    private route: ActivatedRoute, private router:Router) { }
-  
-
-
+    private route: ActivatedRoute) { }
+    
   ngOnInit(): void {
+    
     this.getTweets();
   }
 
   getTweets() {
     this.username = this.route.snapshot.paramMap.get('username');
     if(this.username=='all'){
+      this.loginId=localStorage.getItem('loginId');
       this.heading='ALL';
       this.service.allTweets().subscribe(result => {
         this.tweets=<Tweet[]>result.data;
@@ -41,20 +45,17 @@ export class TweetComponent implements OnInit {
         });
     }
     else{
+      this.loginId=this.username.toString();
       this.heading=this.username.toUpperCase();
     this.service.userTweets(this.username).subscribe(result => {
+     // console.log(JSON.stringify(result));
        this.tweets=<Tweet[]>result.data
       this.mapTweets(result.data);
-      console.log(this.tweets)
     },
       (error) => {
         console.log("error" + error);
       });
     }
-  }
-
-  createTweet() {
-    this.service.createTweet(this.username, this.message);
   }
 
   mapTweets(data: any) {
@@ -100,11 +101,6 @@ export class TweetComponent implements OnInit {
     this.tweets[index]['likeImage']='/assets/like.png';
     this.service.likeTweet(this.tweets[index]['loginId'],this.tweets[index]['id']);
   }
-
- // this.ngOnInit();
-   // this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>{
-     // this.router.navigate(['home', this.username])
-   // });
   }
 
   showReply(index: any) {
@@ -127,20 +123,11 @@ export class TweetComponent implements OnInit {
     });
   }
 
-  updateTweet(){
-    console.log("updateTweet")
-  }
-
-
-  @ViewChild('modal', {static: false}) modal: ModelPopupComponent
-
   openModal(tweet:Tweet) {
     this.popup=true;
     this.modal.open("update", tweet);
     
   }
-do=false;
-popup=false;
 
 deleteTweet(tweet: Tweet){
   this.service.deleteTweet(tweet.loginId,tweet.id).add(()=>{
