@@ -27,8 +27,6 @@ username:String;
         //this.users.avtar= '/assets/'+this.users.avtar+'.png'
       },
       error=>{
-        console.log(error.error);
-        console.log(error.error.error);
         if(error.error.error='JWT Token is Not Valid'){
           this.router.navigate(['/login']);
         }
@@ -39,7 +37,6 @@ username:String;
         this.mapUsers(result.data);
       },
       error=>{
-        console.log(error.error.error);
         if(error.error.error='JWT Token is Not Valid'){
           this.router.navigate(['/login']);
         }

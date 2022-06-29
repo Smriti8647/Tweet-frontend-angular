@@ -19,10 +19,6 @@ export class TweetComponent implements OnInit {
   isReply = new Map();
   heading:String;
   comment=[];
-  loginId:string;
-  showThreeDots=false;
-  popup=false;
-
   constructor(private service:TweetService,
     private route: ActivatedRoute) { }
     
@@ -34,7 +30,6 @@ export class TweetComponent implements OnInit {
   getTweets() {
     this.username = this.route.snapshot.paramMap.get('username');
     if(this.username=='all'){
-      this.loginId=localStorage.getItem('loginId');
       this.heading='ALL';
       this.service.allTweets().subscribe(result => {
         this.tweets=<Tweet[]>result.data;
