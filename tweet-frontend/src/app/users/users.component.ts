@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserResponse } from '../model/UserResponse';
@@ -11,6 +11,7 @@ import { UserService } from '../Services/user.service';
 })
 export class UsersComponent implements OnInit {
 
+  @Input() user:String;
 username:String;
   constructor(private userService: UserService,
     private route: ActivatedRoute,
@@ -21,25 +22,22 @@ username:String;
 
   ngOnInit(): void {
     this.username = this.route.snapshot.paramMap.get('username')
-    if(this.username=='all'){
+    if(this.username=='all' || this.user=='all'){
       this.userService.getAllUsers().subscribe(result=>{
         this.mapUsers(result.data);
         //this.users.avtar= '/assets/'+this.users.avtar+'.png'
       },
       error=>{
-        console.log(error.error);
-        console.log(error.error.error);
         if(error.error.error='JWT Token is Not Valid'){
           this.router.navigate(['/login']);
         }
       })
     }
-    else{
-      this.userService.searchUsers(this.username).subscribe(result=>{
+    else {
+      this.userService.searchUsers(this.user).subscribe(result=>{
         this.mapUsers(result.data);
       },
       error=>{
-        console.log(error.error.error);
         if(error.error.error='JWT Token is Not Valid'){
           this.router.navigate(['/login']);
         }
