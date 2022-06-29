@@ -1,6 +1,6 @@
 <div class="container">
   <div class="card" [formGroup]="form">
-    <div><label>Add Tweet: <textarea formControlName="message" name="message"></textarea></label></div>
-    <div><label>Tag Users: </label><input type="text" formControlName="tagValue">
+    <div><label>Add Tweet: <textarea formControlName="message" maxlength="144" name="message"></textarea></label></div>
+    <div><label>Tag Users: </label><input type="text" formControlName="tagValue" maxlength="44">
       <div><button type="button" class="submit-button" (click)="createTweet()">Post</button></div>
     </div>
