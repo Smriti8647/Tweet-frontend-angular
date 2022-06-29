@@ -6,6 +6,7 @@ import { TweetService } from '../Services/tweet.service';
 import {of, Subscription} from 'rxjs';
 import { TweetComponent } from './tweet.component';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 var tweetMockData:ApiResponse = {
   "success":true,
@@ -113,6 +114,7 @@ let activatedRouteSpy = {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TweetComponent ],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,
@@ -203,6 +205,7 @@ let activatedRouteSpy = {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TweetComponent ],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

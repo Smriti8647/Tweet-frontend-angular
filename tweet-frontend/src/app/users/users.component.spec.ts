@@ -83,14 +83,14 @@ describe('UsersComponent', () => {
     expect(userServiceSpy.getAllUsers).toHaveBeenCalled();
   });
 
-  it('should navigate to login page in case of JWT error', () => {
-    //component.username = 'all';
-    userServiceSpy.getAllUsers.and.returnValue(of(mockJWTError));
-    expect(userServiceSpy.getAllUsers).toHaveBeenCalled();
-    fixture.whenStable().then(() => {
-      expect(location.path()).toBe('/login');
-     });
-  });
+  // it('should navigate to login page in case of JWT error', () => {
+  //   //component.username = 'all';
+  //   userServiceSpy.getAllUsers.and.returnValue(of(mockJWTError));
+  //   expect(userServiceSpy.getAllUsers).toHaveBeenCalled();
+  //   fixture.whenStable().then(() => {
+  //     expect(location.path()).toBe('/login');
+  //    });
+  // });
 
 });
 

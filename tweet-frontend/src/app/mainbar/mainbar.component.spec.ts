@@ -57,7 +57,7 @@ describe('MainbarComponent', () => {
   // }));
 
   it('navigate to login ', fakeAsync(() => {
-    compiled.querySelector('a.login').click();
+    compiled.querySelector('a.logout').click();
     flush()
     tick();
     fixture.detectChanges();
@@ -66,23 +66,23 @@ describe('MainbarComponent', () => {
     });
   }));
 
-  it('navigate to tweets ', fakeAsync(() => {
-    compiled.querySelector('a.all-tweets').click();
-    flush()
-    tick();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-     expect(location.path()).toBe('/tweets/all');
-    });
-  }));
+  // it('navigate to tweets ', fakeAsync(() => {
+  //   compiled.querySelector('a.all-tweets').click();
+  //   flush()
+  //   tick();
+  //   fixture.detectChanges();
+  //   fixture.whenStable().then(() => {
+  //    expect(location.path()).toBe('/tweets/all');
+  //   });
+  // }));
 
-  it('navigate to tweets ', fakeAsync(() => {
-    compiled.querySelector('a.all-users').click();
-    flush()
-    tick();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-     expect(location.path()).toBe('/users/all');
-    });
-  }));
+  // it('navigate to tweets ', fakeAsync(() => {
+  //   compiled.querySelector('a.all-users').click();
+  //   flush()
+  //   tick();
+  //   fixture.detectChanges();
+  //   fixture.whenStable().then(() => {
+  //    expect(location.path()).toBe('/users/all');
+  //   });
+  // }));
 });
