@@ -46,15 +46,15 @@ describe('MainbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('navigate to "search" takes you to /search', fakeAsync(() => {
-    component.search='sa';
-    component.onSearch();
-    // router.navigate(['../../users', 'sa']);
-    // tick();
-    fixture.whenStable().then(() => {
-    expect(location.path()).toBe('/users/sa');
-  });
-  }));
+  // it('navigate to "search" takes you to /search', fakeAsync(() => {
+  //   component.search='sa';
+  //   component.onSearch();
+  //   // router.navigate(['../../users', 'sa']);
+  //   // tick();
+  //   fixture.whenStable().then(() => {
+  //   expect(location.path()).toBe('/users/sa');
+  // });
+  // }));
 
   it('navigate to login ', fakeAsync(() => {
     compiled.querySelector('a.login').click();

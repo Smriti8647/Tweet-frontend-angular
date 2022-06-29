@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TweetService } from '../Services/tweet.service';
 import * as moment from 'moment';
@@ -12,6 +12,7 @@ import { ModelPopupComponent } from '../model-popup/model-popup.component';
 })
 export class TweetComponent implements OnInit {
 
+  
   @ViewChild('modal', {static: false}) modal: ModelPopupComponent
   username: String;
   tweets:Tweet[];
@@ -19,8 +20,14 @@ export class TweetComponent implements OnInit {
   isReply = new Map();
   heading:String;
   comment=[];
+  loginId:string;
+  showThreeDots=false;
+  popup=false;
+  @Input() user:String;
+
   constructor(private service:TweetService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router:Router) { }
     
   ngOnInit(): void {
     
@@ -29,23 +36,30 @@ export class TweetComponent implements OnInit {
 
   getTweets() {
     this.username = this.route.snapshot.paramMap.get('username');
-    if(this.username=='all'){
+    if(this.username=='all' || this.user=='all'){
+      this.loginId=localStorage.getItem('loginId');
       this.heading='ALL';
       this.service.allTweets().subscribe(result => {
         this.tweets=<Tweet[]>result.data;
         this.mapTweets(result.data);
       },
         (error) => {
+          if(error.error.error='JWT Token is Not Valid'){
+            this.router.navigate(['/login']);
+          }
           console.log("error" + error);
         });
     }
-    else if(this.username=='tags'){
+    else if(this.username=='tags' || this.user=='tags'){
       this.service.taggedTweets().subscribe(result=>{
         this.tweets=<Tweet[]>result.data
       this.mapTweets(result.data);
       console.log(this.tweets)
       },
       (error) => {
+        if(error.error.error='JWT Token is Not Valid'){
+          this.router.navigate(['/login']);
+        }
         console.log("error" + error);
       })
 
@@ -59,6 +73,9 @@ export class TweetComponent implements OnInit {
       this.mapTweets(result.data);
     },
       (error) => {
+        if(error.error.error='JWT Token is Not Valid'){
+          this.router.navigate(['/login']);
+        }
         console.log("error" + error);
       });
     }

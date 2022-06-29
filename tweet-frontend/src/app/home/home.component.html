@@ -1,12 +1,36 @@
-<div class="home"><app-mainbar ></app-mainbar></div>
+<div class="home">
+    <app-mainbar (mainbarEvent)="onClick($event)" (searchEvent)="search($event)"></app-mainbar>
+</div>
 <!-- <div *ngIf="showUserTweets"><app-tweet [username]="username"></app-tweet></div> -->
 
-<div class="user-profile"><div class="img"><img src="{{getItem('avtar')}}"></div>
-<div class="userName"><h3>{{getItem('userName')}}</h3></div>
-<div class="userId"><h3>@{{getItem('loginId')}}</h3></div>
+<div class="home" *ngIf="showHome">
+    <div class="user-profile">
+        <div class="img"><img src="{{getItem('avtar')}}"></div>
+        <div class="userName">
+            <h3>{{getItem('userName')}}</h3>
+        </div>
+        <div class="userId">
+            <h3>@{{getItem('loginId')}}</h3>
+        </div>
+    </div>
+    <app-create-tweet [username]="username"></app-create-tweet>
+    <div class="tweet-container">
+
+        <div class="tweet">
+            <app-tweet>
+            </app-tweet>
+        </div>
+    </div>
 </div>
-<app-create-tweet [username]="username"></app-create-tweet>
-<div class="tweet-container">
-   
-    <div class="tweet">   <app-tweet >
-</app-tweet></div></div>
+<div class="allusers" *ngIf="showAllUsers">
+    <app-users [user]="childInfo"></app-users>
+</div>
+<div class="alltweets" *ngIf="showAllTweets">
+    <app-tweet [user]="childInfo"></app-tweet>
+</div>
+<div class="taggedtweets" *ngIf="showTaggedTweets">
+    <app-tweet [user]="childInfo"></app-tweet>
+</div>
+<div class="saerch-users" *ngIf="showSearchUser">
+    <app-users [user]="childInfo"></app-users>
+</div>

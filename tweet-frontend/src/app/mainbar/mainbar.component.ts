@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +10,8 @@ import { Router } from '@angular/router';
 export class MainbarComponent implements OnInit {
 
   @Output() mainbarEvent = new EventEmitter<string>();
-  search:String;
+  @Output() searchEvent = new EventEmitter<string>()
+  search=new FormControl();
   constructor( private router: Router) { }
 
   ngOnInit(): void {
@@ -26,7 +28,9 @@ export class MainbarComponent implements OnInit {
   }
 
   onSearch(){
-    this.router.navigate(['../../users', this.search]);
+    this.onClick('search');
+    console.log(this.search.value);
+    this.searchEvent.emit(''+this.search.value);
   }
 
   onLogout(){
