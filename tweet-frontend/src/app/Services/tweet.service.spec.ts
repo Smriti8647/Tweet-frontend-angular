@@ -50,12 +50,6 @@ describe('TweetService', () => {
 
   });
 
-  it('should be give error while calling userTweets api', () => {
-    httpClientspy.put.and.returnValue(throwError({ status: 404 }));
-    service.userTweets('satyam1');
-
-  })
-
   it('should be call allTweets api', () => {
     let spy = spyOn(service, 'setAuthHeader');
     const apiResponse: ApiResponse = { data: { tweetId: 'tweetId' } };
@@ -65,24 +59,12 @@ describe('TweetService', () => {
 
   });
 
-  it('should be give error while calling allTweets api', () => {
-    httpClientspy.put.and.returnValue(throwError({ status: 404 }));
-    service.allTweets();
-
-  })
-
   it('should be call callTweetApi api', () => {
     let spy = spyOn(service, 'callTweetApi');
     const apiResponse: ApiResponse = { data: { avtar: 'avtar1' } };
     userServiceSpy.getUser.and.returnValue(of(apiResponse));
     service.createTweet('createTweet', 'satyam1', ['satyam2']);
     expect(spy).toHaveBeenCalled();
-
-  });
-
-  it('should be give error while calling createTweet api', () => {
-    userServiceSpy.getUser.and.returnValue(throwError({ status: 404 }));
-    service.createTweet('createTweet', 'satyam1', ['satyam2']);
 
   });
 
@@ -102,12 +84,6 @@ describe('TweetService', () => {
 
   });
 
-  it('should be give error while calling callTweetApi api', () => {
-    httpClientspy.post.and.returnValue(throwError({ status: 404 }));
-    service.callTweetApi('createTweet', 'satyam1', 'avtar1', ['satyam2']);
-
-  });
-
   it('should be call likeTweet api', () => {
     let spy = spyOn(service, 'setAuthHeader');
     const apiResponse: ApiResponse = { data: { tweetId: 'tweetId' } };
@@ -117,24 +93,12 @@ describe('TweetService', () => {
 
   });
 
-  it('should be give error while calling likeTweet api', () => {
-    httpClientspy.put.and.returnValue(throwError({ status: 404 }));
-    service.likeTweet('satyam1', 'avtar1');
-
-  });
-
   it('should be call removelikeTweet api', () => {
     let spy = spyOn(service, 'setAuthHeader');
     const apiResponse: ApiResponse = { data: { tweetId: 'tweetId' } };
     httpClientspy.put.and.returnValue(of(apiResponse));
     service.removeLike('satyam1', 'avtar1');
     expect(spy).toHaveBeenCalled();
-
-  });
-
-  it('should be give error while calling removeLike api', () => {
-    httpClientspy.put.and.returnValue(throwError({ status: 404 }));
-    service.removeLike('satyam1', 'avtar1');
 
   });
 
@@ -148,13 +112,6 @@ describe('TweetService', () => {
 
   });
 
-  it('should be give error while calling replyTweet api', () => {
-    let comentObj = <Comment>{}
-    httpClientspy.put.and.returnValue(throwError({ status: 404 }));
-    service.replyTweet('satyam1', 'avtar1', comentObj);
-
-  });
-
   it('should be call updateTweet api', () => {
     let spy = spyOn(service, 'setAuthHeader');
     const apiResponse: ApiResponse = { data: { tweetId: 'tweetId' } };
@@ -164,24 +121,12 @@ describe('TweetService', () => {
 
   });
 
-  it('should be give error while calling updateTweet api', () => {
-    httpClientspy.put.and.returnValue(throwError({ status: 404 }));
-    service.updateTweet('satyam1', 'avtar1', 'update message');
-
-  });
-
   it('should be call deleteTweet api', () => {
     let spy = spyOn(service, 'setAuthHeader');
     const apiResponse: ApiResponse = { data: { tweetId: 'tweetId' } };
     httpClientspy.delete.and.returnValue(of(apiResponse));
     service.deleteTweet('satyam1', 'avtar1');
     expect(spy).toHaveBeenCalled();
-
-  });
-
-  it('should be give error while calling deleteTweet api', () => {
-    httpClientspy.delete.and.returnValue(throwError({ status: 404 }));
-    service.deleteTweet('satyam1', 'avtar1');
 
   });
 
@@ -213,12 +158,6 @@ describe('TweetService', () => {
   it('should be call setTag api', () => {
     const apiResponse: ApiResponse = { data: { tweetId: 'tweetId' } };
     httpClientspy.put.and.returnValue(of(apiResponse));
-    service.setTag(['satyam1'], 'tweetId');
-
-  });
-
-  it('should be give error while calling setTag api', () => {
-    httpClientspy.put.and.returnValue(throwError({ status: 404 }));
     service.setTag(['satyam1'], 'tweetId');
 
   });
