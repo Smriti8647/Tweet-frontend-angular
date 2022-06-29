@@ -31,15 +31,15 @@ export class TweetService {
     }
   }
 
-  public allTweet() {
+  // public allTweet() {
 
-    this.client.get(this.baseUrl + 'all', this.httpOptions).subscribe(result => {
-      console.log(result);
-    },
-      (error) => {
-        console.log("error" + error);
-      })
-  }
+  //   this.client.get(this.baseUrl + 'all', this.httpOptions).subscribe(result => {
+  //     console.log(result);
+  //   },
+  //     (error) => {
+  //       console.log("error" + error);
+  //     })
+  // }
 
   public userTweets(username: String) {
     this.setAuthHeader();

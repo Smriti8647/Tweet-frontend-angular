@@ -9,7 +9,7 @@
             <time>{{tweet.time}}</time>
             <h3>@{{tweet.loginId}}</h3>
 
-            <div *ngIf="tweet.loginId==loginId" class="menu-nav">
+            <!-- <div *ngIf="tweet.loginId==loginId" class="menu-nav">
                 <div class="menu-item"></div>
                 <div class="dropdown-container" tabindex="-1">
                   <div (click)="showThreeDots=true" class="three-dots"></div>
@@ -18,7 +18,21 @@
                    <hr> <a (click)="deleteTweet(tweet)"><div class="delete"><img src="/assets/Delete.png"> Delete</div></a>
                   </div>
                 </div>
+              </div> -->
+
+
+<div *ngIf="tweet.loginId==loginId">
+  
+              <div class="dropdown1">
+               
+                <button class="dropbtn"> <div (click)="showThreeDots=true" class="three-dots"></div></button>
+                <div class="dropdown-content1">
+                  <a (click)="openModal(tweet)"><div class="update"><img src="/assets/Edit.png" > Update</div></a>
+                  <a (click)="deleteTweet(tweet)"><div class="delete"><img src="/assets/Delete.png"> Delete</div></a>
+                </div>
               </div>
+            </div>
+
 
             <p disabled class="bio">{{tweet.message}}</p>
            <hr>
