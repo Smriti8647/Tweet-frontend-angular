@@ -22,19 +22,12 @@ export class UserService {
   constructor(private client: HttpClient,) { }
   token: String;
   private authUrl = 'http://localhost:8082/api/v1.0/tweets/';
-  private baseUrl='http://localhost:9090/api/v1.0/tweets/';
+  private baseUrl = 'http://localhost:9090/api/v1.0/tweets/';
   isSuccess: Boolean;
-  error:String;
+  error: String;
   httpOptions: Object;
-  // = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${this.token}`
-  //     }),
-  //     responseType: 'json'
-  //   }
 
-  setAuthHeader(){
+  setAuthHeader() {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -44,50 +37,49 @@ export class UserService {
     }
   }
 
-  public login(username: String, password: String):Subject<boolean> {
+  public login(username: String, password: String): Subject<boolean> {
     let login: Login = {
       loginId: username,
       password: password
     }
-    var subject=new Subject<boolean>();
+    var subject = new Subject<boolean>();
 
-     this.client.post<LoginResult>(this.authUrl + 'login', login).subscribe(result => {
+    this.client.post<LoginResult>(this.authUrl + 'login', login).subscribe(result => {
       localStorage.clear();
       this.token = result.token
-      localStorage.setItem('token',""+this.token);
+      localStorage.setItem('token', "" + this.token);
       subject.next(true);
     },
       (error) => {
-        console.log(error.error.message);
-        this.error=error.error.message;
+        this.error = error.error.message;
         subject.next(false);
       }
-      )
-    
+    )
+
     return subject;
   }
-  
-  registerUser(registerRequest:RegisterUser){
-    return this.client.post(this.authUrl+'register', registerRequest, {responseType: 'text'});
+
+  registerUser(registerRequest: RegisterUser) {
+    return this.client.post(this.authUrl + 'register', registerRequest, { responseType: 'text' });
   }
 
-  forgotPassword(forgotPasswordRequest,username){
-    return this.client.post(this.authUrl+username+'/forgot', forgotPasswordRequest, {responseType: 'text'});
+  forgotPassword(forgotPasswordRequest, username) {
+    return this.client.post(this.authUrl + username + '/forgot', forgotPasswordRequest, { responseType: 'text' });
 
   }
-  getUser(username:String){
+  getUser(username: String) {
     this.setAuthHeader();
-   return this.client.get<ApiResponse>(this.baseUrl+'user/'+username, this.httpOptions);
+    return this.client.get<ApiResponse>(this.baseUrl + 'user/' + username, this.httpOptions);
   }
 
-  getAllUsers(){
+  getAllUsers() {
     this.setAuthHeader();
-    return this.client.get<ApiResponse>(this.baseUrl+'user/all', this.httpOptions);
-   }
+    return this.client.get<ApiResponse>(this.baseUrl + 'user/all', this.httpOptions);
+  }
 
-   searchUsers(username:String){
+  searchUsers(username: String) {
     this.setAuthHeader();
-    return this.client.get<ApiResponse>(this.baseUrl+'user/search/'+username, this.httpOptions);
-   }
+    return this.client.get<ApiResponse>(this.baseUrl + 'user/search/' + username, this.httpOptions);
+  }
 
 }

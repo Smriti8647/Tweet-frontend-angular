@@ -8,5 +8,4 @@ export interface RegisterUser {
     loginId: String
     password: String
     question: String
-
 }

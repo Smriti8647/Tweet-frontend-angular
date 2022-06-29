@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
+import { Subject } from 'rxjs';
 import { ApiResponse } from '../model/ApiResponse';
 import { TagRequest } from '../model/TagRequest';
-import { of, Subject } from 'rxjs';
 
 export interface CreateTweet {
   avtar: String
@@ -31,16 +31,6 @@ export class TweetService {
     }
   }
 
-  // public allTweet() {
-
-  //   this.client.get(this.baseUrl + 'all', this.httpOptions).subscribe(result => {
-  //     console.log(result);
-  //   },
-  //     (error) => {
-  //       console.log("error" + error);
-  //     })
-  // }
-
   public userTweets(username: String) {
     this.setAuthHeader();
     return this.client.get<ApiResponse>(this.baseUrl + username, this.httpOptions);
@@ -53,9 +43,9 @@ export class TweetService {
 
   public createTweet(username: String, message: String, users? : String[]) {
     var avatar;
-    this.userService.getUser(username).subscribe(result => {
+    return this.userService.getUser(username).subscribe(result => {
       avatar = result.data['avtar'];
-      this.callTweetApi(username,message,avatar,users);
+     this.callTweetApi(username,message,avatar,users);
     }) 
 
   }
@@ -68,23 +58,16 @@ export class TweetService {
     }
     var tweetId;
     this.setAuthHeader();
-    this.client.post<ApiResponse>(this.baseUrl + username + '/add', createTweet ,this.httpOptions).subscribe(result=>{
+    return this.client.post<ApiResponse>(this.baseUrl + username + '/add', createTweet ,this.httpOptions).subscribe(result=>{
       tweetId=result.data['tweetId'];
       if(users!=null)
       this.setTag(users,tweetId);
-    },
-    error=>{
-      console.log(error);
     })
   }
 
   public likeTweet(username: String, tweetId: String) {
     this.setAuthHeader();
     this.client.put(this.baseUrl + username + '/like/'+tweetId , {},this.httpOptions).subscribe(result=>{
-      console.log(result)
-    },
-    error=>{
-      console.log(error);
     }) 
 
   }
@@ -115,10 +98,6 @@ return subject;
       users: users
     }
     this.client.put(this.baseUrl+'tag',tagRequest,this.httpOptions).subscribe(result=>{
-console.log(result);
-    },
-    error=>{
-      console.log(error);
     });
    
   }
@@ -126,10 +105,6 @@ console.log(result);
   public removeLike(username: String, tweetId: String) {
     this.setAuthHeader();
     this.client.put(this.baseUrl + username + '/remove-like/'+tweetId , {},this.httpOptions).subscribe(result=>{
-      console.log(result)
-    },
-    error=>{
-      console.log(error);
     }) 
 
   }
@@ -137,10 +112,6 @@ console.log(result);
 replyTweet( username:String, tweetId:String, commentObj:Comment, ){
   this.setAuthHeader();
   return this.client.put(this.baseUrl + username + '/reply/'+tweetId , commentObj,this.httpOptions).subscribe(result=>{
-    console.log(result)
-  },
-  error=>{
-    console.log(error);
   })
 }
 
@@ -150,20 +121,12 @@ updateTweet( username:String, tweetId:String, updateMessage:String ){
   }
   this.setAuthHeader();
   return this.client.put(this.baseUrl + username + '/update/'+tweetId , updateObj,this.httpOptions).subscribe(result=>{
-    console.log(result)
-  },
-  error=>{
-    console.log(error);
   })
 }
 
 deleteTweet( username:String, tweetId:String){
   this.setAuthHeader();
   return this.client.delete(this.baseUrl + username + '/delete/'+tweetId ,this.httpOptions).subscribe(result=>{
-    console.log(result)
-  },
-  error=>{
-    console.log(error);
   })
 }
 

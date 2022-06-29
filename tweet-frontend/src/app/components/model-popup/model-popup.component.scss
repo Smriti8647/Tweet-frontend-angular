@@ -1,0 +1,65 @@
+.container {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    
+    justify-self: center;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(61, 64, 201, 0.4); /* Black w/ opacity */
+  }
+  
+  .content {
+    background-color: #fefefe;
+    margin: auto;
+    margin-top: 85px;
+    margin-bottom: 85px;
+    padding: 20px;
+    border: 1px solid #8a7be3;
+    width: 80%;
+  }
+
+  .container::-webkit-scrollbar {
+    display: none;
+  }
+
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    overflow: hidden;
+  }
+  .info, .success, .warning, .error, .validation {
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+  }
+  .info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    // background-image: url('img/info.png');
+  }
+  .success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    // background-image: url('img/success.png');
+  }
+  .warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    // background-image: url('img/warning.png');
+  }
+  .error{
+    color: #D8000C;
+    background-color: #FFBABA;
+    // background-image: url('img/error.png');
+  }
+  .validation{
+    color: #D63301;
+    background-color: #FFCCBA;
+    // background-image: url('img/validation.png');
+  }

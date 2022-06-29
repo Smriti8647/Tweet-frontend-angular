@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { of, Subscription } from 'rxjs';
+import { of } from 'rxjs';
 import { TweetService } from './tweet.service';
 import { UserService } from './user.service';
 import { ApiResponse } from '../model/ApiResponse';
