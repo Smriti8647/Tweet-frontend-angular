@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { TweetService } from 'src/app/Services/tweet.service';
 
 import { CreateTweetComponent } from './create-tweet.component';
@@ -39,6 +39,7 @@ describe('CreateTweetComponent', () => {
       message: 'hey',
       tagValue: 'sasha'
     });
+    tweetServiceSpy.createTweet.and.returnValue(new Subscription());
     expect(component.form.valid).toEqual(true);
     component.createTweet();
     expect(tweetServiceSpy.createTweet).toHaveBeenCalled();
