@@ -2,7 +2,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of, Subscription } from 'rxjs';
 import { TweetComponent } from './tweet.component';
-import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ApiResponse } from 'src/app/model/ApiResponse';
 import { TweetService } from 'src/app/Services/tweet.service';
