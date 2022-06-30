@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/Services/user.service';
+import { UsersComponent } from '../users/users.component';
 
 @Component({
   selector: 'app-home',
@@ -73,13 +74,12 @@ export class HomeComponent implements OnInit {
       this.showAllUsers=false;
       this.showAllTweets=false;
       this.showTaggedTweets=false;
-      this.showHome=false;
+      this.showHome=false;    
     }
   }
   
   search(user:String){
     this.childInfo=user;
-
   }
 
 

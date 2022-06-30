@@ -132,7 +132,7 @@ export class TweetComponent implements OnInit {
   replyTweet(index:number, username:String, tweetId:String){
     let commentObj = <Comment><unknown>{
       'commentMessage': this.comment[index],
-      'commentor': username,
+      'commentor': localStorage.getItem('loginId'),
       'time':new Date()
     }
     this.comment[index]="";

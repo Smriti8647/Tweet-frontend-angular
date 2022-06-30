@@ -21,10 +21,13 @@ username:String;
 
   ngOnInit(): void {
     this.username = this.route.snapshot.paramMap.get('username')
+    this.setUp(this.user);  
+  }
+
+  setUp(user){
     if(this.username=='all' || this.user=='all'){
       this.userService.getAllUsers().subscribe(result=>{
         this.mapUsers(result.data);
-        //this.users.avtar= '/assets/'+this.users.avtar+'.png'
       },
       error=>{
         if(error.error.error='JWT Token is Not Valid'){
@@ -44,7 +47,6 @@ username:String;
       }
       )
     }
-    
   }
 
   mapUsers(data){

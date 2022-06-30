@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { TagRequest } from 'src/app/model/TagRequest';
 import { TweetService } from 'src/app/Services/tweet.service';
 
@@ -31,16 +31,16 @@ export class CreateTweetComponent implements OnInit {
   createTweet() {
     if (this.form.controls['tagValue'].value != null) {
       var users = this.form.controls['tagValue'].value.split(" ");
-      this.service.createTweet(this.username, this.form.controls['message'].value, users).add(result=>{
+      this.service.createTweet(this.username, this.form.controls['message'].value, users).add(result => {
         window.location.reload();
       });
     }
     else {
-      this.service.createTweet(this.username, this.form.controls['message'].value).add(result=>{
+      this.service.createTweet(this.username, this.form.controls['message'].value).add(result => {
         window.location.reload();
       });
     }
-   
+
   }
 
 }

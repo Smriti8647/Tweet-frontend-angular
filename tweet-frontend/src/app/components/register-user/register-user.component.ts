@@ -77,8 +77,6 @@ export class RegisterUserComponent implements OnInit {
     else {
       this.passwordError = true;
     }
-
-
   }
 
   ngOndestroy() {
