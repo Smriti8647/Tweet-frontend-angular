@@ -1,9 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
-//import { ApiResponse } from '../model/ApiResponse';
-//import { UserService } from '../Services/user.service';
+import { of, throwError } from 'rxjs';
 import { Location } from '@angular/common';
 
 import { UsersComponent } from './users.component';
@@ -27,8 +25,14 @@ var userMockData: ApiResponse =
      "name": "Sam Harris" },  
     ], "error": null }
 
-    var mockJWTError:ApiResponse=
-    {"success":false,"data":null,"error":"JWT Token is Not Valid"}
+    var mockJWTError={
+    error: {success: false, data: null, error: 'JWT Token is Not Valid'},
+message: "Http failure response for http://localhost:9090/api/v1.0/tweets/all: 401 OK",
+name: "HttpErrorResponse",
+ok: false,
+status: 401,
+statusText: "OK",
+url: "http://localhost:9090/api/v1.0/tweets/all"}
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -88,26 +92,16 @@ describe('UsersComponent', () => {
   });
 
   it('should show all users on screen', () => {
-    //component.username = 'all';
-    userServiceSpy.getAllUsers.and.returnValue(of(userMockData));
+    userServiceSpy.getAllUsers.and.returnValue(of());
     expect(userServiceSpy.getAllUsers).toHaveBeenCalled();
   });
-
-  // it('should navigate to login page in case of JWT error', () => {
-  //   //component.username = 'all';
-  //   userServiceSpy.getAllUsers.and.returnValue(of(mockJWTError));
-  //   expect(userServiceSpy.getAllUsers).toHaveBeenCalled();
-  //   fixture.whenStable().then(() => {
-  //     expect(location.path()).toBe('/login');
-  //    });
-  // });
 
 });
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
-  let userServiceSpy = jasmine.createSpyObj('UserService', ['getAllUsers', 'searchUsers']);
+  let userServiceSpy = jasmine.createSpyObj('UserService', ['searchUsers']);
   let activatedRouteSpy = {
     snapshot: {
       paramMap: convertToParamMap({
@@ -115,6 +109,8 @@ describe('UsersComponent', () => {
       })
     }
   };
+  let router: Router;
+  let location: Location;
   let mockRouter = {
     navigate: jasmine.createSpy('navigate')
   };
@@ -144,7 +140,9 @@ describe('UsersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
-    userServiceSpy.searchUsers.and.returnValue(of(userMockData));
+    router = TestBed.inject(Router);
+    location = TestBed.inject(Location);
+    userServiceSpy.searchUsers.and.returnValue(of());
     fixture.detectChanges();
   });
 

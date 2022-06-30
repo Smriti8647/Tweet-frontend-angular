@@ -54,28 +54,4 @@ describe('MainbarComponent', () => {
       expect(location.path()).toBe('/login');
     });
   }));
-
-  it('should emit values for all users', fakeAsync(() => {
-    compiled.querySelector('a.all-users').click();
-    flush()
-    tick();
-    spyOn(component.mainbarEvent, 'emit');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(component.mainbarEvent.emit).toHaveBeenCalledWith('allUsers');
-    });
-  }));
-
-  it('should emit values for search ', fakeAsync(() => {
-    compiled.querySelector('button').click();
-    flush()
-    tick();
-    spyOn(component.mainbarEvent, 'emit');
-    spyOn(component.searchEvent, 'emit');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(component.mainbarEvent.emit).toHaveBeenCalledWith('search');
-      expect(component.searchEvent.emit).toHaveBeenCalledWith();
-    });
-  }));
 });
