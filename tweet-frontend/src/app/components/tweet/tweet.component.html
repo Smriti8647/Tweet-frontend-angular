@@ -39,7 +39,7 @@
               <hr>
               <br>
               <div class="button-container"> <button class="like" (click)="setLike(tweet.likeImage, i)"><img
-                    src="{{tweet.likeImage}}" /></button><textarea name="a{{i}}" [(ngModel)]="comment[i]"
+                    src="{{tweet.likeImage}}" /></button><textarea name="a{{i}}" [(ngModel)]="comment[i]" maxlength="144"
                   placeholder="Add your Comment"></textarea><button class="comment"
                   (click)="replyTweet(i,tweet.loginId,tweet.id)"><img src="/assets/reply.png"></button></div>
 
