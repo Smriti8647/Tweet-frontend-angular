@@ -30,7 +30,6 @@ export class TweetComponent implements OnInit {
     private router:Router) { }
     
   ngOnInit(): void {
-    
     this.getTweets();
   }
 
@@ -44,32 +43,37 @@ export class TweetComponent implements OnInit {
         this.mapTweets(result.data);
       },
         (error) => {
-          if(error.error.error='JWT Token is Not Valid'){
+          if(error.error.error=='JWT Token is Not Valid'){
             this.router.navigate(['/login']);
           }
         });
     }
     else if(this.username=='tags' || this.user=='tags'){
       this.service.taggedTweets().subscribe(result=>{
+       if(result.data){
         this.tweets=<Tweet[]>result.data
       this.mapTweets(result.data);
+       }
       },
       (error) => {
-        if(error.error.error='JWT Token is Not Valid'){
+        if(error.error.error=='JWT Token is Not Valid'){
           this.router.navigate(['/login']);
         }
       })
 
     }
     else{
-      this.loginId=this.username.toString();
+      setTimeout(()=>{
+       this.loginId=localStorage.getItem('loginId');
+      });
+    
       this.heading=this.username.toUpperCase();
     this.service.userTweets(this.username).subscribe(result => {
        this.tweets=<Tweet[]>result.data
       this.mapTweets(result.data);
     },
       (error) => {
-        if(error.error.error='JWT Token is Not Valid'){
+        if(error.error.error=='JWT Token is Not Valid'){
           this.router.navigate(['/login']);
         }
       });
@@ -143,7 +147,9 @@ export class TweetComponent implements OnInit {
 
   openModal(tweet:Tweet) {
     this.popup=true;
-    this.modal.open("update", tweet);
+   setTimeout(()=>{
+this.modal.open("update", tweet);
+   }); 
     
   }
 

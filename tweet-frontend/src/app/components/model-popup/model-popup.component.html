@@ -6,10 +6,10 @@
 
 
 <div #updateModal class="container">
-  <div class="blur"></div>
   <div class="content">
     <p>updateModal content here...</p>
-    <textarea [(ngModel)]="updateMessage"></textarea>
-    <button (click)="updateTweet()">Update</button>
-    <button (click)="close()">Close</button>
+   <div class="textareaContainer"> <textarea [(ngModel)]="updateMessage"></textarea></div>
+   <span class="updateButton"> <button (click)="updateTweet()">Update</button></span>
+    <span class="closeButton"><button (click)="close()">Close</button></span>
   </div>
+</div>

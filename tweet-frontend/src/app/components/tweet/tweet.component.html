@@ -1,7 +1,7 @@
 <div clsaa="tweet-container">
-  <div *ngIf="popup!=true" class="user-tweet">
+  <div *ngIf="popup!=true; else popupContainer" class="user-tweet">
 
-    <div *ngIf="tweets" class="container">
+    <div *ngIf="tweets; else nodata" class="container">
       <div *ngFor="let tweet of tweets.reverse(); let i = index" class="content">
         <div class="card">
           <div class="firstinfo"><img src="{{tweet.avtar}}" />
@@ -67,12 +67,12 @@
 
         </div>
       </div>
-    </div>
-
+      </div>
+      <ng-template #nodata><div class="card" id="nodata"><h2>No tweet avaliable</h2></div></ng-template>
   </div>
+  <ng-template #popupContainer>
   <div class="popup-container">
-    <div class="app-model-popup">
       <app-model-popup #modal></app-model-popup>
-    </div>
   </div>
+</ng-template>
 </div>

@@ -1,25 +1,25 @@
 .container {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    
-    justify-self: center;
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(61, 64, 201, 0.4); /* Black w/ opacity */
+  display: none;
+  position: absolute;
+  z-index: 1;
+  justify-self: center;
+  left: 82px;
+  top: 28px;
+  width: 81%;
+  height: 37%;
+  overflow: auto;
+  background-color: white; /* Black w/ opacity */
   }
   
   .content {
     background-color: #fefefe;
     margin: auto;
-    margin-top: 85px;
-    margin-bottom: 85px;
     padding: 20px;
     border: 1px solid #8a7be3;
-    width: 80%;
+    width: 91%;
+    height: 142px;
+    top: 0px;
+    position: relative;
   }
 
   .container::-webkit-scrollbar {
@@ -63,3 +63,59 @@
     background-color: #FFCCBA;
     // background-image: url('img/validation.png');
   }
+
+  textarea{
+    font-family: cursive;
+    width: 431px;
+    height: 75px;
+    border: 2px solid #dadada;
+    border-radius: 7px;
+    font-size: 15px;
+    padding: 5px;
+    margin-top: 10px;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+button{
+  float: right;
+  background-color: #187ca7;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  width: 130px;
+  opacity: 0.9;
+}
+
+.textareaContainer{
+  top: -44px;
+  position: relative;
+  left: 50px;
+}
+
+.updateButton{
+  top: -53px;
+    position: relative;
+    left: -282px;
+}
+
+.closeButton{
+  top: -53px;
+    position: relative;
+    left: -16px;
+}
+
+p{
+  font-family: cursive;
+  position: relative;
+  top: -23px;
+  left: 152px;
+  color: #187ca7;;
+}
