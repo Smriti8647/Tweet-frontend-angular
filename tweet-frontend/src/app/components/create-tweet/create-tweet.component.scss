@@ -83,8 +83,8 @@
 }
 
 label{
-    color: #187ca7;
-    font-family: cursive;
+    color: #07719f;
+    //font-family: cursive;
 }
 .tweetLabel{
     top: -27px;
@@ -99,4 +99,12 @@ label{
     top: -2px;
     position: relative;
     left: 15px;
+}
+
+.tagText{
+    font-size: smaller;
+    margin-top: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    margin-left: 100px;
 }

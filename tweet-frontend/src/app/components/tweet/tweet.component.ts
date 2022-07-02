@@ -63,9 +63,7 @@ export class TweetComponent implements OnInit {
 
     }
     else{
-      setTimeout(()=>{
-       this.loginId=localStorage.getItem('loginId');
-      });
+       this.loginId=localStorage.getItem('username');
     
       this.heading=this.username.toUpperCase();
     this.service.userTweets(this.username).subscribe(result => {

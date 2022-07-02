@@ -11,7 +11,7 @@ describe('CreateTweetComponent', () => {
   let fixture: ComponentFixture<CreateTweetComponent>;
   let tweetServiceSpy = jasmine.createSpyObj('TweetService', ['createTweet']);
   tweetServiceSpy.createTweet.and.returnValue(of());
-
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CreateTweetComponent],

@@ -32,12 +32,17 @@ export class CreateTweetComponent implements OnInit {
     if (this.form.controls['tagValue'].value != null) {
       var users = this.form.controls['tagValue'].value.split(" ");
       this.service.createTweet(this.username, this.form.controls['message'].value, users).add(result => {
-        window.location.reload();
+        setTimeout(()=>{
+          window.location.reload();
+         },200);
+        
       });
     }
     else {
       this.service.createTweet(this.username, this.form.controls['message'].value).add(result => {
-        window.location.reload();
+        setTimeout(()=>{
+          window.location.reload();
+         },200);
       });
     }
 

@@ -21,8 +21,8 @@ export class UserService {
 
   constructor(private client: HttpClient,) { }
   token: String;
-  private authUrl = 'http://localhost:8082/api/v1.0/tweets/';
-  private baseUrl = 'http://localhost:9090/api/v1.0/tweets/';
+  private authUrl = 'http://52.66.199.140:8082/api/v1.0/tweets/';
+  private baseUrl = 'http://3.111.245.87:9090/api/v1.0/tweets/';
   isSuccess: Boolean;
   error: String;
   httpOptions: Object;
@@ -48,6 +48,7 @@ export class UserService {
       localStorage.clear();
       this.token = result.token
       localStorage.setItem('token', "" + this.token);
+      localStorage.setItem('username',""+result.loginId);
       subject.next(true);
     },
       (error) => {

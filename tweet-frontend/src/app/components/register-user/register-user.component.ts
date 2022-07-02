@@ -50,6 +50,9 @@ export class RegisterUserComponent implements OnInit {
   }
 
   onSubmit() {
+    this.showError=false;
+    this.isRegistered=false;
+    this.passwordError=false;
     if (this.profileForm.controls['password'].value == this.profileForm.controls['confirmPassword'].value) {
       this.passwordError = false;
       if (this.profileForm.valid) {

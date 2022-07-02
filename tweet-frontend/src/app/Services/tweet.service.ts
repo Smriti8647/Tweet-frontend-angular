@@ -15,7 +15,7 @@ export interface CreateTweet {
 })
 export class TweetService {
 
-  private baseUrl = 'http://localhost:9090/api/v1.0/tweets/';
+  private baseUrl = 'http://3.111.245.87:9090/api/v1.0/tweets/';
   constructor(private client: HttpClient,
     private userService: UserService) { }
 

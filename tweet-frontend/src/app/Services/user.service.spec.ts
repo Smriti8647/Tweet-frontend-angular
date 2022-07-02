@@ -29,7 +29,7 @@ describe('UserService', () => {
       expect(data).toEqual(expectedData);
     });
 
-   const testRequest = httpTestingController.expectOne('http://localhost:8082/api/v1.0/tweets/register');
+   const testRequest = httpTestingController.expectOne('http://52.66.199.140:8082/api/v1.0/tweets/register');
     expect(testRequest.request.method).toEqual('POST');
 
     testRequest.flush(expectedData);
@@ -43,7 +43,7 @@ describe('UserService', () => {
       expect(data).toEqual(expectedData);
     });
     
-   const testRequest = httpTestingController.expectOne('http://localhost:8082/api/v1.0/tweets/sasha/forgot');
+   const testRequest = httpTestingController.expectOne('http://52.66.199.140:8082/api/v1.0/tweets/sasha/forgot');
     expect(testRequest.request.method).toEqual('POST');
 
     testRequest.flush(expectedData);
@@ -66,7 +66,7 @@ describe('UserService', () => {
       expect(data).toEqual(expectedData);
     });
     
-   const testRequest = httpTestingController.expectOne('http://localhost:9090/api/v1.0/tweets/user/all');
+   const testRequest = httpTestingController.expectOne('http://3.111.245.87:9090/api/v1.0/tweets/user/all');
     expect(testRequest.request.method).toEqual('GET');
 
     testRequest.flush(expectedData);
@@ -89,7 +89,7 @@ describe('UserService', () => {
       expect(data).toEqual(expectedData);
     });
     
-   const testRequest = httpTestingController.expectOne('http://localhost:9090/api/v1.0/tweets/user/search/sa');
+   const testRequest = httpTestingController.expectOne('http://3.111.245.87:9090/api/v1.0/tweets/user/search/sa');
     expect(testRequest.request.method).toEqual('GET');
 
     testRequest.flush(expectedData);
