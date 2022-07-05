@@ -23,11 +23,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = this.route.snapshot.paramMap.get('username');
-    this.showHome=true;
+   
     this.userService.getUser(this.username).subscribe((user)=>{
       localStorage.setItem('avtar',user.data['avtar']);
       localStorage.setItem('userName',user.data['name']);
       localStorage.setItem('loginId',user.data['loginId']);
+      this.showHome=true;
     });
   }
 
@@ -78,8 +79,14 @@ export class HomeComponent implements OnInit {
     }
   }
   
+  @ViewChild('search', {static: false}) searchUser: UsersComponent
+
   search(user:String){
     this.childInfo=user;
+setTimeout(()=>{
+  this.searchUser.ngOnInit();
+})
+
   }
 
 

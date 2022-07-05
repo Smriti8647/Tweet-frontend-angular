@@ -33,5 +33,5 @@
     <app-tweet [user]="childInfo"></app-tweet>
 </div>
 <div class="saerch-users" *ngIf="showSearchUser">
-    <app-users [user]="childInfo"></app-users>
+    <app-users #search [user]="childInfo"></app-users>
 </div>
